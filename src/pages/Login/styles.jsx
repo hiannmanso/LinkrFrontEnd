@@ -42,7 +42,7 @@ const Input = styled.input`
     }
 `
 
-const Button = styled.input`
+const Button = styled.button`
     width: 429px;
     height: 65px;
     border-radius: 6px;

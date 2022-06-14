@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import AuthContext from "../../contexts/AuthContext";
+import AuthContext from "../../contexts/AuthContext"
 import {
     Main,
     Slogan,
@@ -21,7 +21,7 @@ export default function Login() {
         e.preventDefault();
 
         try {
-            const promise = await api.postLogin({ email, password });
+            const promise = api.postLogin({ email, password });
             setToken(promise.data);
             navigate("/feed");
         } catch (err) {
