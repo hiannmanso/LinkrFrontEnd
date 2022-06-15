@@ -1,6 +1,7 @@
 import { Link,useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { StyledSignUp } from './styles'
+import api from "../../services/api";
 
 export default function SignUp(){
     const [habilitarCad,setHabilitarCad] = useState(false);
@@ -14,20 +15,19 @@ export default function SignUp(){
     async function handleSubmitSignUp(e){
         e.preventDefault();
         setHabilitarCad(!habilitarCad);
-        /*
-        const retorno = await postCadastro({
-            email: email,
-            nome: nome,
-            senha: senha
+        const promise = await api.postSignUp({ 
+            name: name,
+            email:email,
+            password: password,
+            picture: picture,
+
         });
-        */
-       console.log("Nome-",name,"senha",password,"picture",picture,"email",email);
-       let retorno = true;
-        if(retorno !== null){
+        console.log("promise",promise);
+        if(promise !== null){
             setHabilitarCad(!habilitarCad);
-            navigate('/login');
+            navigate('/');
         }else{
-            alert("Por favor preencha os campos novamente.");
+            alert("Please try again");
         }   
     }
 
