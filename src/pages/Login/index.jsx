@@ -10,6 +10,7 @@ import {
     SignUp
 } from "./styles";
 import api from "../../services/api";
+import "../../css/global.css"
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -17,12 +18,13 @@ export default function Login() {
     const navigate = useNavigate();
     const { setToken } = useContext(AuthContext);
 
-    function authentication(e) {
+    async function authentication(e) {
         e.preventDefault();
 
         try {
-            const promise = api.postLogin({ email, password });
-            setToken(promise.data);
+            const { data } = await api.postLogin({ email, password });
+            console.log(data);
+            setToken(data);
             navigate("/feed");
         } catch (err) {
             console.log("Deu erro no login", err);
@@ -40,7 +42,9 @@ export default function Login() {
                     <Input type="email" placeholder="e-mail" name="email" onChange={e => setEmail(e.target.value)} value={email} required />
                     <Input type="password" placeholder="password" name="password" onChange={e => setPassword(e.target.value)} value={password} required />
                     <Button type="submit"><p>Log In</p></Button>
-                    <SignUp>First time? Create an account!</SignUp>
+                    <Link to="/signup">
+                        <SignUp>First time? Create an account!</SignUp>
+                    </Link>
                 </SignIn>
             </Main>
         </>
