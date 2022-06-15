@@ -33,6 +33,9 @@ const SignIn = styled.form`
     width: 30%;
     padding: 50px;
     padding-top: 190px;
+    a {
+        text-decoration-color:#FFFFFF;
+    }
 `
 
 const Input = styled.input`
@@ -79,9 +82,6 @@ const SignUp = styled.h1`
     font-weight: 400;
     color: #FFFFFF;
     font-size: 20px;
-    a {
-        text-decoration-color:#FFFFFF;
-    }
 `
 
 export {
