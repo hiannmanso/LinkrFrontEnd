@@ -21,6 +21,7 @@ const Slogan = styled.div`
 
     h2 {
         font-family: 'Oswald', sans-serif;
+        width: 442px;
         font-weight: 700;
         font-size: 43px;
         color: #FFFFFF;
@@ -42,7 +43,7 @@ const Input = styled.input`
     width: 264px;
     height: 40px;
     border-radius: 6px;
-    margin-top: 5px;
+    margin-top: 7px;
     border: 0 none;
     &:focus{
         outline: none;
@@ -64,8 +65,8 @@ const Button = styled.button`
     align-items: center;
     justify-content: center;
     background-color: #1877F2;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 7px;
+    margin-bottom: 7px;
     border: 0 none;
     cursor: pointer;
 
