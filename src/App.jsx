@@ -9,16 +9,16 @@ import "./css/global.css"
 
 export default function App() {
     const [token, setToken] = useState(null);
-    return (<>
-
-        <BrowserRouter>
-            <AuthContext.Provider value={{ token, setToken }}>
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/signup" element={<SignUp />} />
-                </Routes>
-            </AuthContext.Provider>
-        </BrowserRouter>
-    </>
+    return (
+        <>
+            <BrowserRouter>
+                <AuthContext.Provider value={{ token, setToken }}>
+                    <Routes>
+                        <Route path="/" element={<Login />} />
+                        <Route path="/signup" element={<SignUp />} />
+                    </Routes>
+                </AuthContext.Provider>
+            </BrowserRouter>
+        </>
     )
 }
