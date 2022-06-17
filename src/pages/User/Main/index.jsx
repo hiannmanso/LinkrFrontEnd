@@ -6,17 +6,16 @@ import api from '../../../services/api';
 
 export default function Main(){
 
-    const [userInfo,setUserinfo] = useState([{name:null,picture:null}]);
-    const [posts,setPosts] = useState([{description:null,url:null}]);
+    const [userInfo,setUserinfo] = useState([{name:"",picture:""}]);
+    const [posts,setPosts] = useState([{description:"",url:"",urlDescription:"",urlTitle:"",urlImage:""}]);
 
     async function loadUser(){
         //Alterar para carregar id dinamicamente 
         //Infomarçoes do usario
-        const user = await api.getUserId(1);
+        const user = await api.getUserId(3);
         setUserinfo(user);
-        const post = await api.getPostId(1);
+        const post = await api.getPostId(3);
         setPosts(post);
-        console.log("Post->",post);
     }
 
 
@@ -43,6 +42,9 @@ export default function Main(){
                                     postContent={post.description}
                                     url={post.url}
                                     likes={200}
+                                    urlDescription={post.urlDescription}
+                                    urlTitle={post.urlTitle}
+                                    urlImage={post.urlImage}
                                     key={index}
                                 />
                             )

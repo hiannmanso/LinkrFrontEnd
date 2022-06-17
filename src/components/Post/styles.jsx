@@ -8,6 +8,7 @@ const StyledDiv = styled.div`
     display: flex;
     padding-top: 15px;
     margin-bottom: 20px;
+    position: relative;
     .user-like{
         width: 14%;
         display: flex;
@@ -58,6 +59,53 @@ const StyledDiv = styled.div`
         font-size: 17px;
         line-height: 20px;
         color: #FFFFFF;
+    }
+    .url{
+        position: absolute;
+        bottom: 0;
+
+        display: flex;
+
+        margin-bottom: 20px;
+        width: 503px;
+        height: 155px;
+        border: 1px solid #4D4D4D;
+        border-radius: 11px;
+    }
+    .title-url{
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        color: #CECECE;
+        margin-left: 20px;
+        margin-bottom: 5px;
+        margin-top: 24px;
+    }
+
+    .description-url{
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        color: #9B9595;
+        margin-left: 20px;
+        margin-bottom: 15px;
+    }
+    .url-link{
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        color: #CECECE;
+        margin-left: 20px;
+        margin-bottom: 5px;
+    }
+    .image-url{
+        width: 153.44px;
+        height: 155px;
+        background: url(image.png);
+        border-radius: 0px 12px 13px 0px;
     }
 `;
 

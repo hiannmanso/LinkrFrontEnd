@@ -3,10 +3,10 @@ import { IoHeartOutline,IoHeart } from "react-icons/io5";
 import { useState } from 'react';
 
 export default function Post(props){
-    const {name,image,postContent,url,likes} = props
+    const {name,image,postContent,url,likes,urlDescription,urlTitle,urlImage} = props
 
     const [like,setLike] = useState(true);
-
+    
     return(
         <StyledDiv>
             <div className='user-like'>
@@ -31,7 +31,12 @@ export default function Post(props){
                     <p className='content'>{postContent}</p>
                 </div>
                 <div className='url'>
-                    <a src={url} alt="URL post">{url}</a>
+                    <div className='info-url'>
+                        <p className='title-url'>{urlTitle}</p>
+                        <p className='description-url'>{urlDescription}</p>
+                        <a src={url} className='url-link'>{url}</a>
+                    </div>
+                    <img src={urlImage} className='image-url'/>
                 </div>
             </div>
         </StyledDiv>
