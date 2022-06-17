@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp";
 //reset css
 import "./css/reset.css"
 import "./css/global.css"
+import Home from "./pages/Home/index.jsx";
 
 export default function App() {
     const [token, setToken] = useState(null);
@@ -16,6 +17,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
+                    <Route path="/home" element={<Home />} />
                 </Routes>
             </AuthContext.Provider>
         </BrowserRouter>
