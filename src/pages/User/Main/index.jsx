@@ -7,7 +7,7 @@ import api from '../../../services/api';
 export default function Main(){
 
     const [userInfo,setUserinfo] = useState([{name:"",picture:""}]);
-    const [posts,setPosts] = useState([{description:"",url:"",urlDescription:"",urlTitle:"",urlImage:""}]);
+    const [posts,setPosts] = useState(null);
 
     async function loadUser(){
         //Alterar para carregar id dinamicamente 
@@ -32,25 +32,31 @@ export default function Main(){
                 </div>
             </div>
             <div className='container'>
-                <div className='box-post'>
-                    {
-                        posts.map((post,index)=>{
-                            return(
-                                <Post
-                                    name={userInfo[0].name}
-                                    image={userInfo[0].picture}
-                                    postContent={post.description}
-                                    url={post.url}
-                                    likes={200}
-                                    urlDescription={post.urlDescription}
-                                    urlTitle={post.urlTitle}
-                                    urlImage={post.urlImage}
-                                    key={index}
-                                />
-                            )
-                        })
-                    }
-                </div>
+                {
+                    posts !== null ?
+                    <div className='box-post'>
+                        {
+                            posts.map((post,index)=>{
+                                return(
+                                    <Post
+                                        name={userInfo[0].name}
+                                        image={userInfo[0].picture}
+                                        postContent={post.description}
+                                        url={post.url}
+                                        likes={200}
+                                        urlDescription={post.urlDescription}
+                                        urlTitle={post.urlTitle}
+                                        urlImage={post.urlImage}
+                                        key={index}
+                                    />
+                                )
+                            })
+                        }
+                    </div>
+                    :
+                    <p className='not-post'>User hasn't posted anything yet</p>
+                }
+                
                 <div className='trending'>
                     <Trending/>
                 </div>

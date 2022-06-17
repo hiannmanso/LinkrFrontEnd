@@ -41,6 +41,18 @@ const StyledUser = styled.main`
         height: 80vh;
         overflow-y: scroll;
     }
+    .not-post{
+        width: 611px;
+        height: 276px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19px;
+        color: #FFFFFF;
+    }
 `;
 
 export {StyledUser}
