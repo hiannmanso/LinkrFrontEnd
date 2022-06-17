@@ -22,6 +22,19 @@ const StyledHeader = styled.header`
     .info-user{
         display: flex;
     }
+    .search{
+        position: absolute;
+        right: 0;
+
+        color:#C6C6C6;
+        font-size: 20px;
+    }
+    .box-input{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
     input{
         width: 463px;
         height: 35px;
