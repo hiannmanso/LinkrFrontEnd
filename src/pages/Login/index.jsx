@@ -1,5 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Swal from 'sweetalert2'
+import { ThreeDots } from "react-loader-spinner"
 import AuthContext from "../../contexts/AuthContext"
 import {
     Main,
@@ -10,22 +12,34 @@ import {
     SignUp
 } from "./styles";
 import api from "../../services/api";
+import "../../css/global.css"
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { setToken } = useContext(AuthContext);
+    const token = localStorage.getItem('token');
+    localStorage.removeItem('token')
+    if (token) {
+        setToken(token);
+        navigate("/timeline");
+    }
 
-    function authentication(e) {
+    async function authentication(e) {
         e.preventDefault();
-
+        setLoading(true);
         try {
-            const promise = api.postLogin({ email, password });
-            setToken(promise.data);
-            navigate("/feed");
+            const response = await api.postLogin({ email, password });
+            console.log(response);
+            localStorage.setItem('token', response.data);
+            setToken(response.data);
+            navigate("/timeline");
         } catch (err) {
             console.log("Deu erro no login", err);
+            setLoading(false);
+            Swal.fire('ERROR!', 'INCORRECT PASSWORD OR EMAIL', 'error');
         }
     }
 
@@ -39,8 +53,10 @@ export default function Login() {
                 <SignIn onSubmit={authentication}>
                     <Input type="email" placeholder="e-mail" name="email" onChange={e => setEmail(e.target.value)} value={email} required />
                     <Input type="password" placeholder="password" name="password" onChange={e => setPassword(e.target.value)} value={password} required />
-                    <Button type="submit"><p>Log In</p></Button>
-                    <SignUp>First time? Create an account!</SignUp>
+                    {!loading ? <Button type="submit"><p>Log In</p></Button> : <Button disabled><ThreeDots color="#FFFFFF" height={30} width={100} /></Button>}
+                    <Link to="/signup">
+                        <SignUp>First time? Create an account!</SignUp>
+                    </Link>
                 </SignIn>
             </Main>
         </>

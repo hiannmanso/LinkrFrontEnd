@@ -2,11 +2,16 @@ import styled from "styled-components";
 
 const Main = styled.main`
     display: flex;
+    height: 100%;
+    box-sizing: border-box;
 `
 
 const Slogan = styled.div`
     background-color: #151515;
-
+    width: 70%;
+    box-sizing: border-box;
+    padding: 50px;
+    padding-top: 180px;
     h1 {
         font-family: 'Passion One', cursive;
         font-weight: 700;
@@ -16,6 +21,7 @@ const Slogan = styled.div`
 
     h2 {
         font-family: 'Oswald', sans-serif;
+        width: 442px;
         font-weight: 700;
         font-size: 43px;
         color: #FFFFFF;
@@ -24,12 +30,21 @@ const Slogan = styled.div`
 
 const SignIn = styled.form`
     background-color: #333333;
+    box-sizing: border-box;
+    width: 30%;
+    padding: 50px;
+    padding-top: 190px;
+    a {
+        text-decoration-color:#FFFFFF;
+    }
 `
 
 const Input = styled.input`
-    width: 429px;
-    height: 65px;
+    width: 264px;
+    height: 40px;
     border-radius: 6px;
+    margin-top: 7px;
+    border: 0 none;
     &:focus{
         outline: none;
     }
@@ -43,19 +58,23 @@ const Input = styled.input`
 `
 
 const Button = styled.button`
-    width: 429px;
-    height: 65px;
+    width: 270px;
+    height: 40px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #1877F2;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    border: 0 none;
     cursor: pointer;
 
     p {
         font-family: 'Oswald', sans-serif;
         font-weight: 700;
-        font-size: 27px;
+        font-size: 20px;
+        color: #FFFFFF;
     }
 `
 
