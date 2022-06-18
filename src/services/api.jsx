@@ -21,9 +21,36 @@ async function postSignUp(objeto) {
     
 }
 
+async function getPostId(id) {
+    try {
+        const resposta = await axios.get(`${URL}posts/${id}`);
+        const {data} = resposta;
+        return data;
+    }
+    catch(err) {
+        console.log(err.resposta);
+        return null;
+    } 
+}
+async function getUserId(id) {
+    
+    try {
+        const resposta = await axios.get(`${URL}user/${id}`);
+        const {data} = resposta;
+        return data;
+    }
+    catch(err) {
+        console.log(err.resposta);
+        return null;
+    }
+    
+}
+
 const api = {
     postLogin,
-    postSignUp
+    postSignUp,
+    getPostId,
+    getUserId
 };
 
 export default api;
