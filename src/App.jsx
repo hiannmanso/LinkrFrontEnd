@@ -3,6 +3,7 @@ import { useState } from "react";
 import AuthContext from "./contexts/AuthContext";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import User from "./pages/User";
 //reset css
 import "./css/reset.css"
 import "./css/global.css"
@@ -16,6 +17,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
+                    <Route path="/user" element={<User />} />
                 </Routes>
             </AuthContext.Provider>
         </BrowserRouter>
