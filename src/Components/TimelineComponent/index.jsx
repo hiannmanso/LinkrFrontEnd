@@ -44,7 +44,9 @@ export default function TimelineComponent() {
             console.log(error)
         })
     },[checknewpost])
-    
+    function openUrl(url) {
+        window.open(`${url}`, '_blank');
+    }
     async function newPost(e){
         if(!token){
              token = localStorage.getItem('token');
@@ -84,7 +86,7 @@ export default function TimelineComponent() {
             </header>
             <section>
                 <div className='postContainer'>
-                    {infoUser?<img className='imgProfile' src={infoUser[0].picture} alt="" />:<img className='imgProfile' src="https://m.media-amazon.com/sasa/I/71ftHg2dwML._AC_SL1500_.jpg" alt="" />}
+                    {infoUser?<img className='imgProfile' src={infoUser[0].picture} alt="" />:<img className='imgProfile' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU" alt="" />}
                   
                         <div>
                             <p>What are you going to share today?</p>
@@ -112,7 +114,7 @@ export default function TimelineComponent() {
                         <div className='description'>
                             <p>{item.name}</p>
                             <h2>{item.description}</h2>
-                            <div className='infosUrl'>
+                            <div className='infosUrl' onClick={()=>openUrl(item.url)}>
                                 <div>
                                     <p>{item.urlTitle}</p>
                                     <h1>{item.urlDescription}</h1>
