@@ -18,7 +18,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
-                    <Route path="/home" element={<Home />} />
+                    <Route path="/timeline" element={<Home />} />
                     <Route path="/user" element={<User />} />
                 </Routes>
             </AuthContext.Provider>

@@ -1,14 +1,14 @@
-import Header from "../../Components/Header/index.jsx";
-import TimelineComponent from "../../Components/TimelineComponent/index.jsx";
+import Header from "../Home"
+import TimelineComponent from "../../components/TimelineComponent";
 
 export default function Home() {
 
-    return(
-    <>
-        <Header/>
-        <TimelineComponent/>
-    
-    </>
+    return (
+        <>
+            {/* <Header /> */}
+            <TimelineComponent />
+
+        </>
     )
-    
+
 }

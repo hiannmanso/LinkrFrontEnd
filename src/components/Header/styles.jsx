@@ -1,56 +1,29 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const StyledHeader = styled.header`
-    background-color: #151515;
-    width: 100%;
-    height: 72px;
+
+export const HeaderContainer = styled.div`
+
+width: 100vw;
+height: 72px;
+background: #151515;
+position: fixed;
+top: 0;
+z-index: 10;
     display: flex;
-    justify-content: center;
-    .box-header{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 90%;
-    }
+    justify-content: space-between;
+    align-items: center;
     .logo{
-        font-family: 'Passion One';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 49px;
-        color: #FFFFFF;
+        padding: 10px 0 8px 28px;
     }
-    .info-user{
+    div{
+        padding: 10px 17px 9px;
         display: flex;
+        flex-direction: row;
+        .imgProfile{
+            padding-left: 16.31px;
+            width: 53px;
+            height: 53px;
+            border-radius: 26.5px;
+        }
     }
-    .search{
-        position: absolute;
-        right: 0;
-
-        color:#C6C6C6;
-        font-size: 20px;
-    }
-    .box-input{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-    }
-    input{
-        width: 463px;
-        height: 35px;
-        background: #FFFFFF;
-        border-radius: 8px;
-        border: none;
-    }
-    .info-user{
-        display: flex;
-        align-items: center;
-    }
-    .more{
-        color: #FFFFFF;
-        font-size: 30px;
-        margin-right: 5px;
-    }
-`;
-
-export {StyledHeader}
+`

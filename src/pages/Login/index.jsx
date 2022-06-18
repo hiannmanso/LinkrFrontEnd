@@ -21,7 +21,8 @@ export default function Login() {
     const navigate = useNavigate();
     const { setToken } = useContext(AuthContext);
     const token = localStorage.getItem('token');
-    localStorage.removeItem('token')
+    console.log(token)
+    // localStorage.removeItem('token')
     if (token) {
         setToken(token);
         navigate("/timeline");
