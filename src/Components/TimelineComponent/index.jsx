@@ -7,21 +7,31 @@ import axios from 'axios'
 
 
 export default function TimelineComponent() {
-    const {token} = useContext(AuthContext)
-    const [posts,setPosts] = useState()
-    const [url,setUrl] = useState()
+
+    const {token,setInfoUser,infoUser} = useContext(AuthContext)
+    const [posts,setPosts] = useState('')
+    const [url,setUrl] = useState('')
     const [description,setDescription] = useState()
     const [btnEnable,setBtnEnable] = useState(false)
+    const [checknewpost,setChecknewpost] = useState(false)
+  
 
-    // useEffect(()=>{
-    //     urlMetadata('https://github.com/hiannmanso').then(response=>{
-    //         console.log(response)
 
-    //     }).catch(error=>{
-    //         console.log(error)
-    //     })
-    // },[])
+    useEffect(()=>{
+        axios({
+            method:"get",
+            url:"http://localhost:5000/users",
+            headers: {
+				authorization: `Bearer ${token}`,
+			},
 
+        }).then(response=>{
+            setInfoUser(response.data)
+            console.log(response)
+        }).catch(error=>{
+            console.log(error)
+        })
+    },[])
     useEffect(()=>{
         axios({
             method:"get",
@@ -29,15 +39,21 @@ export default function TimelineComponent() {
         }).then(response=>{
             setPosts(response.data)
             console.log(response.data)
-        }).catch(error=>{
+        }).catch(error=>{   
+            alert('An error occured while trying to fetch the posts, please refresh the page')
             console.log(error)
         })
-    },[])
-    function newPost(e){
+    },[checknewpost])
+    
+    async function newPost(e){
+        if(!token){
+             token = localStorage.getItem('token');
+
+        }
         e.preventDefault()
         if(!url) {alert('fill in url with valid link') 
         return}
-        setBtnEnable(!btnEnable)
+        await setBtnEnable(true)
         axios({
             method:"post",
             url:"http://localhost:5000/posts",
@@ -49,11 +65,13 @@ export default function TimelineComponent() {
 				authorization: `Bearer ${token}`,
 			},
         }).then(response=>{
-            console.log(btnEnable)
-            setBtnEnable(!btnEnable)
+            setBtnEnable(false)
             console.log(response.data)
+            setChecknewpost(!checknewpost)
+            setDescription('')
+            setUrl('')
         }).catch(error=>{
-            console.log(btnEnable)
+            setBtnEnable(false)
             alert('error posting your link')
 
             console.log(error)
@@ -66,13 +84,15 @@ export default function TimelineComponent() {
             </header>
             <section>
                 <div className='postContainer'>
-                    <img className='imgProfile' src="https://m.media-amazon.com/images/I/71ftHg2dwML._AC_SL1500_.jpg" alt="" />
+                    {infoUser?<img className='imgProfile' src={infoUser[0].picture} alt="" />:<img className='imgProfile' src="https://m.media-amazon.com/sasa/I/71ftHg2dwML._AC_SL1500_.jpg" alt="" />}
+                  
                         <div>
                             <p>What are you going to share today?</p>
                             <form onSubmit={newPost}>
                             <input className='url' value={url} onChange={e=>{setUrl(e.target.value)}}  type="text" placeholder="http:// ..." disabled={btnEnable} />
                             <input className='description' value={description} onChange={e=>{setDescription(e.target.value)}}  type="text" placeholder="Awesome article about #javascript" disabled={btnEnable}/>
-                            <input className='submit' type='submit' value='Publish' disabled={false}/>
+                            {btnEnable?<input className='submit' type='submit' value='Publishing...' disabled/>:<input className='submit' type='submit' value='Publish' disabled={btnEnable}/>}
+                        
                             </form>
 
                         </div>
@@ -85,7 +105,7 @@ export default function TimelineComponent() {
                         return(
                     <s.Post key={index}>
                         <div className='icons'>
-                            <img className='imgProfile' src="https://m.media-amazon.com/images/I/71ftHg2dwML._AC_SL1500_.jpg" alt="" />
+                            <img className='imgProfile' src={item.picture} alt="" />
                             <ion-icon name="heart-outline"></ion-icon>
                             <p>0 likes</p>
                         </div>
@@ -105,7 +125,7 @@ export default function TimelineComponent() {
                     </s.Post>
 
                         )
-                    }):<h1>Loading</h1>}
+                    }):<h1>There are no posts yet</h1>}
                    
                 </s.Timeline>
             </main>

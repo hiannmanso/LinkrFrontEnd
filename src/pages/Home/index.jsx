@@ -1,11 +1,12 @@
-import Header from "../../Components/Header/index.jsx";
+import Header from "../Home";
 import TimelineComponent from "../../Components/TimelineComponent/index.jsx";
+import HeaderTimeline from "../../Components/HeaderTimeline/index.jsx";
 
 export default function Home() {
 
     return(
     <>
-        <Header/>
+        <HeaderTimeline/>
         <TimelineComponent/>
     
     </>

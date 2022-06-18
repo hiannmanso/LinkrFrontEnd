@@ -10,7 +10,7 @@ export default function Post(props){
     return(
         <StyledDiv>
             <div className='user-like'>
-                <img src={image} className='user-picture'/>
+                <img src={image} className='user-picture' alt=''/>
                 {
                     like ?
                     <div className='like'>
@@ -34,9 +34,9 @@ export default function Post(props){
                     <div className='info-url'>
                         <p className='title-url'>{urlTitle}</p>
                         <p className='description-url'>{urlDescription}</p>
-                        <a src={url} className='url-link'>{url}</a>
+                        <a href={url} className='url-link' >{url}</a>
                     </div>
-                    <img src={urlImage} className='image-url'/>
+                    <img src={urlImage} className='image-url' alt=''/>
                 </div>
             </div>
         </StyledDiv>

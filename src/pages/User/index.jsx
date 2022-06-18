@@ -1,5 +1,5 @@
 import Main from "./Main"
-import Header from "../../components/Header"
+import Header from "../Home"
 
 export default function User(){
     return(

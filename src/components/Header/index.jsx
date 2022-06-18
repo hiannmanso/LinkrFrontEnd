@@ -3,6 +3,7 @@ import { IoSearchOutline,IoChevronDownOutline } from "react-icons/io5";
 
 export default function Header(){
     //`Search for people ${<IoSearchOutline/>}`
+    
 
     return(
         <StyledHeader>

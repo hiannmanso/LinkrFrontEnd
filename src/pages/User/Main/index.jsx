@@ -1,6 +1,6 @@
 import {StyledUser} from './styles'
-import Post from '../../../components/Post'
-import Trending from '../../../components/Trending'
+import Post from '../../../Components/Post'
+import Trending from '../../../Components/Trending'
 import { useState,useEffect } from 'react';
 import api from '../../../services/api';
 

@@ -35,7 +35,7 @@ export default function Login() {
             console.log(response);
             localStorage.setItem('token', response.data);
             setToken(response.data);
-            navigate("/timeline");
+            navigate("/home");
         } catch (err) {
             console.log("Deu erro no login", err);
             setLoading(false);

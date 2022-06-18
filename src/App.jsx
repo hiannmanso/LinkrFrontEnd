@@ -11,10 +11,11 @@ import Home from "./pages/Home/index.jsx";
 
 export default function App() {
     const [token, setToken] = useState(null);
+    const [infoUser,setInfoUser] = useState()
     return (<>
 
         <BrowserRouter>
-            <AuthContext.Provider value={{ token, setToken }}>
+            <AuthContext.Provider value={{ token, setToken,infoUser,setInfoUser}}>
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
