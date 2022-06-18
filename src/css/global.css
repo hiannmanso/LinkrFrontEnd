@@ -1,5 +1,7 @@
 body{
-    height: 100vh;
+    padding-top: 74px;
+    height: calc(100vh - 74px);
+    background-color: #333333;
 }
 .root{
     height: 100vh;
