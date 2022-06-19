@@ -1,8 +1,9 @@
 import * as s from './styles.jsx'
-import urlMetadata from 'url-metadata'
 import { useEffect, useState, useContext } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
+import ReactHashtag from "react-hashtag";
+import { useNavigate } from 'react-router-dom'
 import api from '../../services/api.jsx'
 import Likes from '../Likes'
 
@@ -16,6 +17,7 @@ export default function TimelineComponent() {
     const [description, setDescription] = useState()
     const [btnEnable, setBtnEnable] = useState(false)
     const [checknewpost, setChecknewpost] = useState(false)
+    const navigate = useNavigate()
     const idLocal = localStorage.getItem("id");
     const tokenLocal = localStorage.getItem("token");
     const [liked, setLiked] = useState(false);
@@ -65,6 +67,10 @@ export default function TimelineComponent() {
             console.log(error)
         })
     }, [checknewpost])
+
+    function openUrl(url) {
+        window.open(`${url}`, '_blank');
+    }
 
     async function newPost(e) {
         if (token) {
@@ -141,7 +147,7 @@ export default function TimelineComponent() {
             </header>
             <section>
                 <div className='postContainer'>
-                    {infoUser ? <img className='imgProfile' src={infoUser[0].picture} alt="" /> : <img className='imgProfile' src="https://m.media-amazon.com/sasa/I/71ftHg2dwML._AC_SL1500_.jpg" alt="" />}
+                    {infoUser ? <img className='imgProfile' src={infoUser[0].picture} alt="" /> : <img className='imgProfile' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU" alt="" />}
 
                     <div>
                         <p>What are you going to share today?</p>
@@ -167,8 +173,13 @@ export default function TimelineComponent() {
                                 </div>
                                 <div className='description'>
                                     <p>{item.name}</p>
-                                    <h2>{item.description}</h2>
-                                    <div className='infosUrl'>
+                                    {item.description ? <h2>
+                                        <ReactHashtag onHashtagClick={(hashtagValue) => { navigate(`/hashtag/${hashtagValue.replace('#', '').toLowerCase()}`) }}>
+
+                                            {item.description}
+                                        </ReactHashtag>
+                                    </h2> : <></>}
+                                    <div className='infosUrl' onClick={() => openUrl(item.url)}>
                                         <div>
                                             <p>{item.urlTitle}</p>
                                             <h1>{item.urlDescription}</h1>

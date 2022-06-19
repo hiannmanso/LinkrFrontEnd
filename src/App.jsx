@@ -8,6 +8,7 @@ import User from "./pages/User";
 import "./css/reset.css"
 import "./css/global.css"
 import Home from "./pages/Home/index.jsx";
+import HashtagPage from "./pages/HashtagPage/index.jsx";
 
 export default function App() {
     const [token, setToken] = useState(null);
@@ -22,6 +23,7 @@ export default function App() {
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/timeline" element={<Home />} />
                     <Route path="/user" element={<User />} />
+                    <Route path='hashtag/:hashtag' element={<HashtagPage />} />
                 </Routes>
             </AuthContext.Provider>
         </BrowserRouter>
