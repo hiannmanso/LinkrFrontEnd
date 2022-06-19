@@ -1,14 +1,26 @@
-import logo from '../../assets/linkr.svg';
-import arrow from '../../assets/arrow.svg';
-import * as s from './styles.jsx'
+import { StyledHeader } from './styles'
+import { IoSearchOutline, IoChevronDownOutline } from "react-icons/io5";
+
 export default function Header() {
+    //`Search for people ${<IoSearchOutline/>}`
+
     return (
-        <s.HeaderContainer>
-            <img className='logo' src={logo} alt="linkrLogo" />
-            <div>
-                <img src={arrow} alt="" />
-                <img className='imgProfile' src="https://m.media-amazon.com/images/I/71ftHg2dwML._AC_SL1500_.jpg" alt="" />
+        <StyledHeader>
+
+            <div className='box-header'>
+                <p className='logo'>linkr</p>
+
+
+                <div className='box-input'>
+                    <input type="search" placeholder={'Search for people'} />
+                    <IoSearchOutline className='search' />
+                </div>
+
+                <div className='info-user'>
+                    <IoChevronDownOutline className='more' />
+                    <p>image user</p>
+                </div>
             </div>
-        </s.HeaderContainer>
+        </StyledHeader>
     )
-}
+}    

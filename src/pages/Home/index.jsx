@@ -1,11 +1,12 @@
-import Header from "../Home"
+
 import TimelineComponent from "../../components/TimelineComponent";
+import HeaderTimeline from "../../components/HeaderTimeline";
 
 export default function Home() {
 
     return (
         <>
-            {/* <Header /> */}
+            <HeaderTimeline />
             <TimelineComponent />
 
         </>
