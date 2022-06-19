@@ -1,10 +1,9 @@
 import * as s from './styles.jsx'
-import urlMetadata from 'url-metadata'
 import { useEffect, useState, useContext } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
-
-
+import ReactHashtag from "react-hashtag";
+import {  useNavigate } from 'react-router-dom'
 
 export default function TimelineComponent() {
 
@@ -14,6 +13,7 @@ export default function TimelineComponent() {
     const [description,setDescription] = useState()
     const [btnEnable,setBtnEnable] = useState(false)
     const [checknewpost,setChecknewpost] = useState(false)
+    const navigate = useNavigate()
   
 
 
@@ -113,7 +113,13 @@ export default function TimelineComponent() {
                         </div>
                         <div className='description'>
                             <p>{item.name}</p>
-                            <h2>{item.description}</h2>
+                            {item.description? <h2>
+                            <ReactHashtag onHashtagClick={(hashtagValue)=>{navigate(`/hashtag/${hashtagValue.replace('#','').toLowerCase()}`)}}>
+                            
+                                {item.description}
+                                </ReactHashtag>
+                                </h2>:<></>}
+                           
                             <div className='infosUrl' onClick={()=>openUrl(item.url)}>
                                 <div>
                                     <p>{item.urlTitle}</p>

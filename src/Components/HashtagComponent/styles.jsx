@@ -8,6 +8,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 position: relative;
+margin-top :74px;
 
 
     header{
