@@ -261,3 +261,8 @@ flex-direction: row;
         }
 `
 
+export const editPost = styled.div`
+    position: absolute;
+    top:0;
+    right: 50px;
+`
