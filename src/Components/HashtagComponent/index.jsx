@@ -1,4 +1,4 @@
-import * as s from './styles.jsx'
+import * as s from "./styles"
 import { useEffect, useState, useContext } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
@@ -13,24 +13,26 @@ export default function HashtagComponent() {
 
 
 
-    const [checknewpost,setChecknewpost] = useState(false)
+
+    const [checknewpost, setChecknewpost] = useState(false)
     const navigate = useNavigate()
-    
+
     function openUrl(url) {
         window.open(`${url}`, '_blank');
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(hashtag)
         axios({
-            method:"get",
-            url:`http://localhost:5000/hashtag/${hashtag}`
-        }).then(response=>{
+            method: "get",
+            url: `http://localhost:5000/hashtag/${hashtag}`
+        }).then(response => {
             setPosts(response.data)
             console.log(response.data)
-        }).catch(error=>{
+        }).catch(error => {
             console.log(error)
         })
+
     },[renderHash])
     
     return(
@@ -79,6 +81,7 @@ export default function HashtagComponent() {
                         
                     </div>
                     <TrendingComponent/>
+
                 </s.Timeline>
             </main>
         </s.TimelineContainer>

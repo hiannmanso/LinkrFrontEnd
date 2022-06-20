@@ -3,7 +3,10 @@ import { useEffect, useState, useContext } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
 import ReactHashtag from "react-hashtag";
+
 import {  useNavigate } from 'react-router-dom'
+import api from '../../services/api.jsx'
+import Likes from '../Likes'
 import TrendingComponent from '../TrendingComponent/index.jsx';
 import Modal from 'react-modal';
 
@@ -12,80 +15,142 @@ import ModalDelete from '../ModalDelete/index.jsx';
 // Modal.setAppElement('#yourAppElement');
 export default function TimelineComponent() {
 
-    const {token,setInfoUser,infoUser ,setDisplayModal} = useContext(AuthContext)
-    const [posts,setPosts] = useState('')
-    const [url,setUrl] = useState('')
-    const [description,setDescription] = useState()
-    const [btnEnable,setBtnEnable] = useState(false)
-    const [checknewpost,setChecknewpost] = useState(false)
-    const [modalIsOpen, setIsOpen] = useState(false);
+
+    const { token, setInfoUser, infoUser, id, setID } = useContext(AuthContext)
+    const [posts, setPosts] = useState('')
+    const [url, setUrl] = useState('')
+    const [description, setDescription] = useState()
+    const [btnEnable, setBtnEnable] = useState(false)
+    const [checknewpost, setChecknewpost] = useState(false)
     const navigate = useNavigate()
-  
-   
+    const idLocal = localStorage.getItem("id");
+    const tokenLocal = localStorage.getItem("token");
+    const [liked, setLiked] = useState(false);
+    console.log(tokenLocal, idLocal)
 
-    useEffect(()=>{
-        axios({
-            method:"get",
-            url:"http://localhost:5000/users",
-            headers: {
-				authorization: `Bearer ${token}`,
-			},
+    useEffect(() => {
+        if (!id) {
+            axios({
+                method: "get",
+                url: `http://localhost:5000/user/${idLocal}`,
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
 
-        }).then(response=>{
-            setInfoUser(response.data)
-            console.log(response)
-        }).catch(error=>{
-            console.log(error)
-        })
-    },[])
-    useEffect(()=>{
+            }).then(response => {
+                setInfoUser(response.data)
+                console.log(response)
+            }).catch(error => {
+                console.log(error)
+            })
+        } else {
+
+            axios({
+                method: "get",
+                url: `http://localhost:5000/user/${id}`,
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+
+            }).then(response => {
+                setInfoUser(response.data)
+                console.log(response)
+            }).catch(error => {
+                console.log(error)
+            })
+        }
+    }, [])
+    useEffect(() => {
         axios({
-            method:"get",
-            url:"http://localhost:5000/posts"
-        }).then(response=>{
+            method: "get",
+            url: "http://localhost:5000/posts"
+        }).then(response => {
             setPosts(response.data)
             console.log(response.data)
-        }).catch(error=>{   
+        }).catch(error => {
             alert('An error occured while trying to fetch the posts, please refresh the page')
             console.log(error)
         })
-    },[checknewpost])
+    }, [checknewpost])
+
     function openUrl(url) {
         window.open(`${url}`, '_blank');
     }
+
     
     async function newPost(e){
         if(!token){
              token = localStorage.getItem('token');
 
-        }
-        e.preventDefault()
-        if(!url) {alert('fill in url with valid link') 
-        return}
-        await setBtnEnable(true)
-        axios({
-            method:"post",
-            url:"http://localhost:5000/posts",
-            data:{
-                url,
-                description,
-            },
-            headers: {
-				authorization: `Bearer ${token}`,
-			},
-        }).then(response=>{
-            setBtnEnable(false)
-            console.log(response.data)
-            setChecknewpost(!checknewpost)
-            setDescription('')
-            setUrl('')
-        }).catch(error=>{
-            setBtnEnable(false)
-            alert('error posting your link')
 
-            console.log(error)
-        })
+    async function newPost(e) {
+        if (token) {
+            axios({
+                method: "post",
+                url: "http://localhost:5000/posts",
+                data: {
+                    url,
+                    description,
+                },
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            }).then(response => {
+                setBtnEnable(false)
+                console.log(response.data)
+                setChecknewpost(!checknewpost)
+                setDescription('')
+                setUrl('')
+            }).catch(error => {
+                setBtnEnable(false)
+                alert('error posting your link')
+
+                console.log(error)
+            })
+
+        } else {
+            e.preventDefault()
+            if (!url) {
+                alert('fill in url with valid link')
+                return
+            }
+            await setBtnEnable(true)
+            axios({
+                method: "post",
+                url: "http://localhost:5000/posts",
+                data: {
+                    url,
+                    description,
+                },
+                headers: {
+                    authorization: `Bearer ${tokenLocal}`,
+                },
+            }).then(response => {
+                setBtnEnable(false)
+                console.log(response.data)
+                setChecknewpost(!checknewpost)
+                setDescription('')
+                setUrl('')
+            }).catch(error => {
+                setBtnEnable(false)
+                alert('error posting your link')
+
+                console.log(error)
+            })
+        }
     }
+
+    async function like(postID) {
+        console.log(postID);
+        try {
+            token ? await api.setLike({ postID }, token) : await api.setLike({ postID }, tokenLocal);
+            setLiked(true);
+        } catch (err) {
+            setLiked(false);
+            console.log("Error in like", err);
+        }
+    }
+
     function modalScreen(item) {
         setDisplayModal('flex')
         // deletePost(item)
@@ -104,10 +169,12 @@ export default function TimelineComponent() {
     }
 
     return(
+
         <s.TimelineContainer>
             <header>
                 <h1>timeline</h1>
             </header>
+
             <div className='timeline'>
                 <div className='left'>
                     <section>
@@ -170,6 +237,7 @@ export default function TimelineComponent() {
                 </div>
                 <TrendingComponent/>               
             </div>
+
         </s.TimelineContainer>
     )
 }

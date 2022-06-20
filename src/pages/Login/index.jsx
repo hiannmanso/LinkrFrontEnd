@@ -19,11 +19,15 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { setToken } = useContext(AuthContext);
+    const { setToken, setID } = useContext(AuthContext);
     const token = localStorage.getItem('token');
-    localStorage.removeItem('token')
-    if (token) {
+    const id = localStorage.getItem('id');
+    // localStorage.removeItem('token')
+    // localStorage.removeItem('id')
+    console.log(token, id)
+    if (token && id) {
         setToken(token);
+        setID(id);
         navigate("/timeline");
     }
 
@@ -33,9 +37,12 @@ export default function Login() {
         try {
             const response = await api.postLogin({ email, password });
             console.log(response);
-            localStorage.setItem('token', response.data);
-            setToken(response.data);
-            navigate("/home");
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('id', response.data.user);
+            setToken(response.data.token);
+            console.log(response.data.user)
+            setID(response.data.user);
+            navigate("/timeline");
         } catch (err) {
             console.log("Deu erro no login", err);
             setLoading(false);

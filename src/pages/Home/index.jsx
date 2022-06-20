@@ -1,4 +1,5 @@
 
+
 import TimelineComponent from "../../Components/TimelineComponent/index.jsx";
 import HeaderTimeline from "../../Components/HeaderTimeline/index.jsx";
 import TrendingComponent from "../../Components/TrendingComponent/index.jsx";
@@ -12,6 +13,7 @@ export default function Home() {
         <TimelineComponent/>
         <ModalDelete/>
     </>
+
     )
-    
+
 }

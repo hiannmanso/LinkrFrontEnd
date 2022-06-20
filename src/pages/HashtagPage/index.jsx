@@ -5,12 +5,12 @@ import HashtagComponent from "../../Components/HashtagComponent/index.jsx";
 
 export default function HashtagPage() {
 
-    return(
-    <>
-        <HeaderTimeline/>
-        <HashtagComponent/>
-    
-    </>
+    return (
+        <>
+            <HeaderTimeline />
+            <HashtagComponent />
+
+        </>
     )
-    
+
 }

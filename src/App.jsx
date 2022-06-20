@@ -12,19 +12,21 @@ import HashtagPage from "./pages/HashtagPage/index.jsx";
 
 export default function App() {
     const [token, setToken] = useState(null);
+
     const [infoUser,setInfoUser] = useState()
+    const [id, setID] = useState("");
     const [renderHash,setRenderHash] = useState(true)
     const [displayModal,setDisplayModal] = useState('none')
     return (<>
 
         <BrowserRouter>
-            <AuthContext.Provider value={{ token, setToken,infoUser,setInfoUser, renderHash, setRenderHash,displayModal,setDisplayModal}}>
+            <AuthContext.Provider value={{ token, setToken,infoUser,setInfoUser, renderHash, setRenderHash,displayModal,setDisplayModal, id, setID }}>
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<SignUp />} />
-                    <Route path="/home" element={<Home />} />
+                    <Route path="/timeline" element={<Home />} />
                     <Route path="/user" element={<User />} />
-                    <Route path='hashtag/:hashtag' element={<HashtagPage/>}/>
+                    <Route path='hashtag/:hashtag' element={<HashtagPage />} />
                 </Routes>
             </AuthContext.Provider>
         </BrowserRouter>
