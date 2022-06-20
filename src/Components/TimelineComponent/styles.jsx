@@ -8,8 +8,15 @@ display: flex;
 flex-direction: column;
 align-items: center;
 position: relative;
+margin-top: 100px;
 
-
+    .timeline{
+        display: flex;
+        flex-direction: row;
+        .left{
+             margin-right   :25px ;
+        }
+    }
     header{
         
         width: 145px;
@@ -130,6 +137,11 @@ background: #171717;
 border-radius: 16px;
 display: flex;
 flex-direction: row;
+        .first-line{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
         .icons{
 
             display: flex;
