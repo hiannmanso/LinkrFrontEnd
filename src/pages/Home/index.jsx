@@ -10,7 +10,7 @@ export default function Home() {
     <>
         <HeaderTimeline/>
         <TimelineComponent/>
-        <ModalDelete/>
+        {/* <ModalDelete/> */}
     </>
     )
     

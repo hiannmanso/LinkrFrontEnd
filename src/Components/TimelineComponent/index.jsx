@@ -139,7 +139,9 @@ export default function TimelineComponent() {
                                 <div className='description'>
                                     <div className='first-line'>
                                      <p>{item.name}</p>
-                                     {item.id ===infoUser[0].id ?  <img src={trasher} alt="trasher" onClick={()=>{modalScreen()}} /> :<></>}
+                                     {/* {item.id === infoUser[0].id ? <h1>loaded</h1>:<h1>loading</h1>} */}
+                                     <img src={trasher} alt="trasher"  onClick={()=>{console.log(infoUser)}} />
+                                     {/* {item.postID ===infoUser[0].id ?  <img src={trasher} alt="trasher"  onClick={()=>{modalScreen()}} /> :<>loading</>} */}
                                   
                                     </div>
                                     {item.description? <h2>
