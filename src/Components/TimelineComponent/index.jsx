@@ -1,5 +1,5 @@
 import * as s from './styles.jsx'
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useRef } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
 import ReactHashtag from "react-hashtag";
@@ -21,6 +21,7 @@ export default function TimelineComponent() {
     const idLocal = localStorage.getItem("id");
     const tokenLocal = localStorage.getItem("token");
     const [liked, setLiked] = useState(false);
+    const inputRef = useRef(null);
     console.log(tokenLocal, idLocal)
 
     useEffect(() => {
@@ -70,6 +71,10 @@ export default function TimelineComponent() {
 
     function openUrl(url) {
         window.open(`${url}`, '_blank');
+    }
+
+    const editTextOfPost = () => {
+        inputRef.current.focus();
     }
 
     async function newPost(e) {
@@ -128,6 +133,7 @@ export default function TimelineComponent() {
             })
         }
     }
+    console.log(infoUser)
 
     async function like(postID) {
         console.log(postID);
@@ -138,6 +144,10 @@ export default function TimelineComponent() {
             setLiked(false);
             console.log("Error in like", err);
         }
+    }
+
+    async function toEdit() {
+
     }
 
     return (
@@ -169,6 +179,7 @@ export default function TimelineComponent() {
                             <s.Post key={index}>
                                 <div className='icons'>
                                     <img className='imgProfile' src={item.picture} alt="" />
+                                    <s.editPost><ion-icon onClick={() => editTextOfPost()} name="pencil"></ion-icon></s.editPost>
                                     <Likes like={() => like(item.id)} likes={item.quantityLikes} id={item.id} />
                                 </div>
                                 <div className='description'>

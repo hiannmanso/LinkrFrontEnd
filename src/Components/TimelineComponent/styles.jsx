@@ -123,6 +123,7 @@ position: relative;
 export const Timeline = styled.div`
 `
 export const Post = styled.div`
+position: relative;
 margin-bottom: 16px;
 width: 611px;
 min-height: 276px;
@@ -249,3 +250,8 @@ flex-direction: row;
         }
 `
 
+export const editPost = styled.div`
+    position: absolute;
+    top:0;
+    right: 50px;
+`

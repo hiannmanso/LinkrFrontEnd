@@ -6,7 +6,7 @@ export default function Home() {
 
     return (
         <>
-            <HeaderTimeline />
+            {/* <HeaderTimeline /> */}
             <TimelineComponent />
 
         </>
