@@ -9,20 +9,15 @@ import TrendingComponent from '../TrendingComponent/index.jsx'
 export default function HashtagComponent() {
 	const { token, setInfoUser, infoUser, renderHash } = useContext(AuthContext)
 	const [posts, setPosts] = useState('')
-	const { hashtag } = useParams()
+	const { userID } = useParams()
 
 	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
 
-	function openUrl(url) {
-		window.open(`${url}`, '_blank')
-	}
-
 	useEffect(() => {
-		console.log(hashtag)
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/hashtag/${hashtag}`,
+			url: `http://localhost:5000/posts/${userID}`,
 		})
 			.then((response) => {
 				setPosts(response.data)
@@ -31,7 +26,10 @@ export default function HashtagComponent() {
 			.catch((error) => {
 				console.log(error)
 			})
-	}, [renderHash])
+	}, [])
+	function openUrl(url) {
+		window.open(`${url}`, '_blank')
+	}
 
 	return (
 		<s.TimelineContainer>
@@ -39,7 +37,11 @@ export default function HashtagComponent() {
 				<s.Timeline>
 					<div className="left">
 						<header>
-							<h1>#{hashtag}</h1>
+							{posts ? (
+								<h1>{`${posts[0].name}'s posts`}</h1>
+							) : (
+								<h1>loading</h1>
+							)}
 						</header>
 						{posts ? (
 							posts.map((item, index) => {
@@ -55,14 +57,7 @@ export default function HashtagComponent() {
 											<p>0 likes</p>
 										</div>
 										<div className="description">
-											<p
-												className="username"
-												onClick={() => {
-													navigate(`/user/${item.id}`)
-												}}
-											>
-												{item.name}
-											</p>
+											<p>{item.name}</p>
 											{item.description ? (
 												<h2>
 													<ReactHashtag

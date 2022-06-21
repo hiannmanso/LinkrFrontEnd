@@ -13,35 +13,29 @@ import trasher from './../../assets/trasher.svg'
 import ModalDelete from '../ModalDelete/index.jsx'
 
 export default function TimelineComponent() {
-	const { token, setInfoUser, infoUser, id, setID, setDisplayModal } =
-		useContext(AuthContext)
+	const {
+		token,
+		setInfoUser,
+		infoUser,
+		id,
+		setID,
+		setDisplayModal,
+		setCheckTrending,
+		checkTrending,
+		idPostDelete,
+		setIdPostDelete,
+		setChecknewpost,
+		checknewpost,
+	} = useContext(AuthContext)
 	const [posts, setPosts] = useState('')
 	const [url, setUrl] = useState('')
 	const [description, setDescription] = useState()
 	const [btnEnable, setBtnEnable] = useState(false)
-	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
 	const idLocal = localStorage.getItem('id')
 	const tokenLocal = localStorage.getItem('token')
 	const [liked, setLiked] = useState(false)
 
-	useEffect(() => {
-		axios({
-			method: 'get',
-			url: `http://localhost:5000/user/${idLocal}`,
-			headers: {
-				authorization: `Bearer ${token}`,
-			},
-		})
-			.then((response) => {
-				setInfoUser(response.data)
-				setTimeout(infoUser, 2000)
-				console.log(response)
-			})
-			.catch((error) => {
-				console.log(error)
-			})
-	}, [])
 	useEffect(() => {
 		axios({
 			method: 'get',
@@ -83,6 +77,8 @@ export default function TimelineComponent() {
 					setChecknewpost(!checknewpost)
 					setDescription('')
 					setUrl('')
+					console.log(checkTrending)
+					setCheckTrending(!checkTrending)
 				})
 				.catch((error) => {
 					setBtnEnable(false)
@@ -111,6 +107,7 @@ export default function TimelineComponent() {
 				.then((response) => {
 					setBtnEnable(false)
 					console.log(response.data)
+					setCheckTrending(!checkTrending)
 					setChecknewpost(!checknewpost)
 					setDescription('')
 					setUrl('')
@@ -139,30 +136,14 @@ export default function TimelineComponent() {
 
 	function modalScreen(item) {
 		setDisplayModal('flex')
-		// deletePost(item)
 	}
-	function deletePost(item) {
-		console.log(item.postID)
-		axios({
-			method: 'delete',
-			url: `http://localhost:5000/posts/${item.postID}`,
-		})
-			.then((response) => {
-				console.log(response)
-			})
-			.catch((error) => {
-				console.log(error)
-			})
-	}
-
 	return (
 		<s.TimelineContainer>
-			<header>
-				<h1>timeline</h1>
-			</header>
-
 			<div className="timeline">
 				<div className="left">
+					<header>
+						<h1>timeline</h1>
+					</header>
 					<section>
 						<div className="postContainer">
 							{infoUser ? (
@@ -248,7 +229,15 @@ export default function TimelineComponent() {
 											</div>
 											<div className="description">
 												<div className="first-line">
-													<p>{item.name}</p>
+													<p className='username'
+														onClick={() => {
+															navigate(
+																`/user/${item.id}`
+															)
+														}}
+													>
+														{item.name}
+													</p>
 													{item.id ===
 													infoUser[0].id ? (
 														<img
@@ -256,6 +245,9 @@ export default function TimelineComponent() {
 															alt="trasher"
 															onClick={() => {
 																modalScreen()
+																setIdPostDelete(
+																	item.postID
+																)
 															}}
 														/>
 													) : (
@@ -310,7 +302,9 @@ export default function TimelineComponent() {
 									)
 								})
 							) : (
-								<h1>There are no posts yet</h1>
+								<header>
+									<h1>There are no posts yet</h1>
+								</header>
 							)}
 						</s.Timeline>
 					</main>

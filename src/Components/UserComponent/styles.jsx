@@ -1,13 +1,30 @@
 import styled from 'styled-components'
 
 export const TimelineContainer = styled.div`
+	padding-top: 100px;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
-	margin-top: 100 px;
 
+	header {
+		width: 100%;
+		display: flex;
+		padding: 0 0 43px;
+		height: 64px;
+
+		font-family: 'Oswald';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 43px;
+		line-height: 64px;
+
+		color: #ffffff;
+	}
+	.username:hover {
+		cursor: pointer;
+	}
 	.postContainer {
 		margin-bottom: 29px;
 		position: relative;
@@ -22,7 +39,6 @@ export const TimelineContainer = styled.div`
 		input::placeholder {
 			padding-left: 13px;
 		}
-
 		p {
 			width: 445px;
 			height: 40px;
@@ -101,24 +117,9 @@ export const TimelineContainer = styled.div`
 `
 
 export const Timeline = styled.div`
-	margin-top: 100px;
 	display: flex;
 	flex-direction: row;
 	.left {
-		header {
-			width: 100%;
-			display: flex;
-			padding: 0 0 43px;
-			height: 64px;
-
-			font-family: 'Oswald';
-			font-style: normal;
-			font-weight: 700;
-			font-size: 43px;
-			line-height: 64px;
-
-			color: #ffffff;
-		}
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -133,9 +134,6 @@ export const Post = styled.div`
 	border-radius: 16px;
 	display: flex;
 	flex-direction: row;
-	.username:hover {
-		cursor: pointer;
-	}
 	.icons {
 		display: flex;
 		flex-direction: column;
