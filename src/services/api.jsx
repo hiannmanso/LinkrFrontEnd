@@ -21,6 +21,14 @@ async function postSignUp(objeto) {
 
 }
 
+async function getUsersLikes() {
+    return await axios.get(`${URL}likes`);
+}
+
+async function getPostById(id) {
+    return await axios.get(`${URL}post/${id}`);
+}
+
 async function setLike(body, token) {
     const config = {
         headers: {
@@ -55,12 +63,24 @@ async function getUserId(id) {
 
 }
 
+async function editPost(id, body, token) {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    return await axios.put(`${URL}posts/${id}`, body, config);
+}
+
 const api = {
     postLogin,
     postSignUp,
     getPostId,
     getUserId,
-    setLike
+    setLike,
+    editPost,
+    getPostById,
+    getUsersLikes
 };
 
 export default api;

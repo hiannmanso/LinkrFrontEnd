@@ -129,6 +129,7 @@ export const TimelineContainer = styled.div`
 export const Timeline = styled.div``
 export const Post = styled.div`
 	margin-bottom: 16px;
+	position: relative;
 	width: 611px;
 	min-height: 276px;
 	background: #171717;
@@ -143,15 +144,16 @@ export const Post = styled.div`
 		flex-direction: row;
 		justify-content: space-between;
 	}
+	ion-icon {
+		padding: 19px 0 4px 0;
+		color: white;
+		font-size: 19.95px;
+	}
 	.icons {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		ion-icon {
-			padding: 19px 0 4px 0;
-			color: white;
-			font-size: 19.95px;
-		}
+
 		p {
 			font-family: 'Lato';
 			font-style: normal;
