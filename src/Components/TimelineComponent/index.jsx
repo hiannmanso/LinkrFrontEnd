@@ -3,13 +3,19 @@ import { useEffect, useState, useContext, useRef } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
 import ReactHashtag from "react-hashtag";
+
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api.jsx'
 import Likes from '../Likes'
+import TrendingComponent from '../TrendingComponent/index.jsx';
+// import Modal from 'react-modal';
 
-
-
+import trasher from './../../assets/trasher.svg'
+import PostHome from '../PostsHome.jsx/index.jsx';
+// import ModalDelete from '../ModalDelete/index.jsx';
+import ModalDelete from '../ModalDelete/index.jsx'
 export default function TimelineComponent() {
+
 
     const { token, setInfoUser, infoUser, id, setID } = useContext(AuthContext)
     const [posts, setPosts] = useState('')
@@ -17,45 +23,41 @@ export default function TimelineComponent() {
     const [description, setDescription] = useState()
     const [btnEnable, setBtnEnable] = useState(false)
     const [checknewpost, setChecknewpost] = useState(false)
+    const [displayModal, setDisplayModal] = useState("none");
     const navigate = useNavigate()
     const idLocal = localStorage.getItem("id");
     const tokenLocal = localStorage.getItem("token");
     const [liked, setLiked] = useState(false);
     const inputRef = useRef(null);
+    const [usersLikes, setUsersLikes] = useState('');
     console.log(tokenLocal, idLocal)
 
+
     useEffect(() => {
-        if (!id) {
-            axios({
-                method: "get",
-                url: `http://localhost:5000/user/${idLocal}`,
-                headers: {
-                    authorization: `Bearer ${token}`,
-                },
-
-            }).then(response => {
-                setInfoUser(response.data)
-                console.log(response)
-            }).catch(error => {
-                console.log(error)
-            })
-        } else {
-
-            axios({
-                method: "get",
-                url: `http://localhost:5000/user/${id}`,
-                headers: {
-                    authorization: `Bearer ${token}`,
-                },
-
-            }).then(response => {
-                setInfoUser(response.data)
-                console.log(response)
-            }).catch(error => {
-                console.log(error)
-            })
+        try {
+            const promise = api.getUsersLikes();
+            setUsersLikes(promise.data);
+        } catch (err) {
+            console.log(err);
         }
     }, [])
+
+
+    useEffect(() => {
+        axios({
+            method: "get",
+            url: `http://localhost:5000/user/${idLocal}`,
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+
+        }).then(response => {
+            setInfoUser(response.data)
+            console.log(response)
+        }).catch(error => {
+            console.log(error)
+        })
+    }, []);
     useEffect(() => {
         axios({
             method: "get",
@@ -146,67 +148,71 @@ export default function TimelineComponent() {
         }
     }
 
-    async function toEdit() {
+    async function toEdit(id, description) {
+        try {
+            await api.editPost(id, { description }, tokenLocal);
+        } catch (err) {
+            console.log("Deu erro na edição", err);
+        }
+    }
 
+    function modalScreen(item) {
+        setDisplayModal('flex')
+        // deletePost(item)
+
+    }
+    function deletePost(item) {
+        console.log(item.postID)
+        axios({
+            method: "delete",
+            url: `http://localhost:5000/posts/${item.postID}`
+        }).then(response => {
+            console.log(response)
+        }).catch(error => {
+            console.log(error)
+        })
     }
 
     return (
+
         <s.TimelineContainer>
             <header>
                 <h1>timeline</h1>
             </header>
-            <section>
-                <div className='postContainer'>
-                    {infoUser ? <img className='imgProfile' src={infoUser[0].picture} alt="" /> : <img className='imgProfile' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU" alt="" />}
 
-                    <div>
-                        <p>What are you going to share today?</p>
-                        <form onSubmit={newPost}>
-                            <input className='url' value={url} onChange={e => { setUrl(e.target.value) }} type="text" placeholder="http:// ..." disabled={btnEnable} />
-                            <input className='description' value={description} onChange={e => { setDescription(e.target.value) }} type="text" placeholder="Awesome article about #javascript" disabled={btnEnable} />
-                            {btnEnable ? <input className='submit' type='submit' value='Publishing...' disabled /> : <input className='submit' type='submit' value='Publish' disabled={btnEnable} />}
+            <div className='timeline'>
+                <div className='left'>
+                    <section>
+                        <div className='postContainer'>
+                            {infoUser ? <img className='imgProfile' src={infoUser[0].picture} alt="" /> : <img className='imgProfile' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU" alt="" />}
+                            <div>
+                                <p>What are you going to share today?</p>
+                                <form onSubmit={newPost}>
+                                    <input className='url' value={url} onChange={e => { setUrl(e.target.value) }} type="text" placeholder="http:// ..." disabled={btnEnable} />
+                                    <input className='description' value={description} onChange={e => { setDescription(e.target.value) }} type="text" placeholder="Awesome article about #javascript" disabled={btnEnable} />
+                                    {btnEnable ? <input className='submit' type='submit' value='Publishing...' disabled /> : <input className='submit' type='submit' value='Publish' disabled={btnEnable} />}
 
-                        </form>
+                                </form>
 
-                    </div>
+                            </div>
+                        </div>
+                    </section>
+                    <main>
+
+                        <s.Timeline>
+                            {posts ? posts.map((item, index) => {
+                                return (
+                                    <PostHome userID={item.id} idLocal={infoUser[0].id} toEdit={() => toEdit(item.id)} openUrl={() => openUrl(item.url)} trasher={trasher} description={item.description} index={index} name={item.name} picture={item.picture} like={() => like(item.postID)} likes={item.quantityLikes} id={item.postID} url={item.url} urlTitle={item.urlTitle} urlDescription={item.urlDescription} urlImage={item.urlImage} quantityLikes={item.quantityLikes} modalScreen={() => modalScreen(item.id)} editTextOfPost={() => (editTextOfPost())} />
+                                )
+                            }) : <h1>There are no posts yet</h1>}
+
+                        </s.Timeline>
+                    </main>
+
                 </div>
-            </section>
-            <main>
+                <TrendingComponent />
+            </div>
 
-                <s.Timeline>
-                    {posts ? posts.map((item, index) => {
-                        return (
-                            <s.Post key={index}>
-                                <div className='icons'>
-                                    <img className='imgProfile' src={item.picture} alt="" />
-                                    <s.editPost><ion-icon onClick={() => editTextOfPost()} name="pencil"></ion-icon></s.editPost>
-                                    <Likes like={() => like(item.id)} likes={item.quantityLikes} id={item.id} />
-                                </div>
-                                <div className='description'>
-                                    <p>{item.name}</p>
-                                    {item.description ? <h2>
-                                        <ReactHashtag onHashtagClick={(hashtagValue) => { navigate(`/hashtag/${hashtagValue.replace('#', '').toLowerCase()}`) }}>
-
-                                            {item.description}
-                                        </ReactHashtag>
-                                    </h2> : <></>}
-                                    <div className='infosUrl' onClick={() => openUrl(item.url)}>
-                                        <div>
-                                            <p>{item.urlTitle}</p>
-                                            <h1>{item.urlDescription}</h1>
-                                            <h2>{item.url}</h2>
-                                        </div>
-                                        <img src={item.urlImage} alt="" />
-                                    </div>
-
-                                </div>
-                            </s.Post>
-
-                        )
-                    }) : <h1>There are no posts yet</h1>}
-
-                </s.Timeline>
-            </main>
         </s.TimelineContainer>
     )
 }

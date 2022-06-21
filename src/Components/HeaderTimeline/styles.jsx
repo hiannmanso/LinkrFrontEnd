@@ -25,4 +25,30 @@ z-index: 10;
             border-radius: 26.5px;
         }
     }
+    ion-icon {
+        font-size: 40px;
+        color: #FFF;
+    }
+`
+
+export const LogoutButton = styled.div`
+        /* margin-top: 70px; */
+        position: fixed;
+        top: 70px;
+        right: 0;
+        div{
+            width: 150px;
+            height: 47px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #171717;
+            border-radius: 0px 0px 20px 20px;
+
+            h1 {
+                font-family: 'Lato', sans-serif;
+                color: #FFF;
+                font-size: 17px;
+            }
+        }
 `

@@ -122,6 +122,12 @@ margin-top :74px;
 `
 
 export const Timeline = styled.div`
+    display: flex;
+    flex-direction: row;
+    .left{
+        margin-right: 25px;
+    }
+        
 `
 export const Post = styled.div`
 margin-bottom: 16px;
