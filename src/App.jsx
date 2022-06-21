@@ -17,6 +17,9 @@ export default function App() {
 	const [id, setID] = useState('')
 	const [renderHash, setRenderHash] = useState(true)
 	const [displayModal, setDisplayModal] = useState('none')
+	const [checkTrending, setCheckTrending] = useState(false)
+	const [idPostDelete, setIdPostDelete] = useState('')
+	const [checknewpost, setChecknewpost] = useState(false)
 	return (
 		<>
 			<BrowserRouter>
@@ -32,13 +35,19 @@ export default function App() {
 						setDisplayModal,
 						id,
 						setID,
+						checkTrending,
+						setCheckTrending,
+						idPostDelete,
+						setIdPostDelete,
+						checknewpost,
+						setChecknewpost,
 					}}
 				>
 					<Routes>
 						<Route path="/" element={<Login />} />
 						<Route path="/signup" element={<SignUp />} />
 						<Route path="/timeline" element={<Home />} />
-						<Route path="/user" element={<User />} />
+						<Route path="/user/:userID" element={<User />} />
 						<Route
 							path="hashtag/:hashtag"
 							element={<HashtagPage />}

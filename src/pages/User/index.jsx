@@ -1,11 +1,10 @@
-import Main from "./Main"
-import Header from "../Home"
-
+import HeaderTimeline from './../../Components/HeaderTimeline/index.jsx'
+import UserComponent from './../../Components/UserComponent/index.jsx'
 export default function User() {
-    return (
-        <>
-            <Header />
-            <Main />
-        </>
-    )
+	return (
+		<>
+			<HeaderTimeline />
+			<UserComponent />
+		</>
+	)
 }
