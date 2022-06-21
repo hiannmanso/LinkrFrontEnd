@@ -1,5 +1,5 @@
 import * as s from './styles.jsx'
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useRef } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
 import ReactHashtag from 'react-hashtag'
@@ -11,6 +11,7 @@ import TrendingComponent from '../TrendingComponent/index.jsx'
 
 import trasher from './../../assets/trasher.svg'
 import ModalDelete from '../ModalDelete/index.jsx'
+import PostHome from '../PostsHome/index.jsx'
 
 export default function TimelineComponent() {
 	const {
@@ -29,6 +30,8 @@ export default function TimelineComponent() {
 	} = useContext(AuthContext)
 	const [posts, setPosts] = useState('')
 	const [url, setUrl] = useState('')
+	const [usersLikes, setUsersLikes] = useState('')
+	const inputRef = useRef(null)
 	const [description, setDescription] = useState()
 	const [btnEnable, setBtnEnable] = useState(false)
 	const navigate = useNavigate()
@@ -53,8 +56,25 @@ export default function TimelineComponent() {
 			})
 	}, [checknewpost])
 
+	useEffect(() => {
+		try {
+			const promise = api.getUsersLikes()
+			setUsersLikes(promise.data)
+		} catch (err) {
+			console.log(err)
+		}
+	}, [])
+
 	function openUrl(url) {
 		window.open(`${url}`, '_blank')
+	}
+
+	async function toEdit(id, description) {
+		try {
+			await api.editPost(id, { description }, tokenLocal)
+		} catch (err) {
+			console.log('Deu erro na edição', err)
+		}
 	}
 
 	async function newPost(e) {
@@ -121,29 +141,17 @@ export default function TimelineComponent() {
 		}
 	}
 
-	async function like(postID) {
-		console.log(postID)
-		try {
-			token
-				? await api.setLike({ postID }, token)
-				: await api.setLike({ postID }, tokenLocal)
-			setLiked(true)
-		} catch (err) {
-			setLiked(false)
-			console.log('Error in like', err)
-		}
-	}
-
 	function modalScreen(item) {
 		setDisplayModal('flex')
 	}
 	return (
 		<s.TimelineContainer>
+			<header>
+				<h1>timeline</h1>
+			</header>
+
 			<div className="timeline">
 				<div className="left">
-					<header>
-						<h1>timeline</h1>
-					</header>
 					<section>
 						<div className="postContainer">
 							{infoUser ? (
@@ -206,105 +214,31 @@ export default function TimelineComponent() {
 							{posts ? (
 								posts.map((item, index) => {
 									return (
-										<s.Post key={index}>
-											<div className="icons">
-												<img
-													className="imgProfile"
-													src={item.picture}
-													alt=""
-												/>
-												<s.editPost>
-													<ion-icon
-														onClick={() =>
-															console.log('teste')
-														}
-														name="pencil"
-													></ion-icon>
-												</s.editPost>
-												<Likes
-													like={() => like(item.id)}
-													likes={item.quantityLikes}
-													id={item.id}
-												/>
-											</div>
-											<div className="description">
-												<div className="first-line">
-													<p className='username'
-														onClick={() => {
-															navigate(
-																`/user/${item.id}`
-															)
-														}}
-													>
-														{item.name}
-													</p>
-													{item.id ===
-													infoUser[0].id ? (
-														<img
-															src={trasher}
-															alt="trasher"
-															onClick={() => {
-																modalScreen()
-																setIdPostDelete(
-																	item.postID
-																)
-															}}
-														/>
-													) : (
-														<></>
-													)}
-												</div>
-												{item.description ? (
-													<h2>
-														<ReactHashtag
-															onHashtagClick={(
-																hashtagValue
-															) => {
-																navigate(
-																	`/hashtag/${hashtagValue
-																		.replace(
-																			'#',
-																			''
-																		)
-																		.toLowerCase()}`
-																)
-															}}
-														>
-															{item.description}
-														</ReactHashtag>
-													</h2>
-												) : (
-													<></>
-												)}
-
-												<div
-													className="infosUrl"
-													onClick={() =>
-														openUrl(item.url)
-													}
-												>
-													<div>
-														<p>{item.urlTitle}</p>
-														<h1>
-															{
-																item.urlDescription
-															}
-														</h1>
-														<h2>{item.url}</h2>
-													</div>
-													<img
-														src={item.urlImage}
-														alt=""
-													/>
-												</div>
-											</div>
-										</s.Post>
+										<PostHome
+											userID={item.id}
+											idLocal={infoUser[0].id}
+											toEdit={() => toEdit(item.id)}
+											openUrl={() => openUrl(item.url)}
+											trasher={trasher}
+											description={item.description}
+											index={index}
+											name={item.name}
+											picture={item.picture}
+											likes={item.quantityLikes}
+											id={item.postID}
+											url={item.url}
+											urlTitle={item.urlTitle}
+											urlDescription={item.urlDescription}
+											urlImage={item.urlImage}
+											quantityLikes={item.quantityLikes}
+											modalScreen={() =>
+												modalScreen(item.id)
+											}
+										/>
 									)
 								})
 							) : (
-								<header>
-									<h1>There are no posts yet</h1>
-								</header>
+								<h1>There are no posts yet</h1>
 							)}
 						</s.Timeline>
 					</main>

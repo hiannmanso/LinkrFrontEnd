@@ -4,8 +4,9 @@ import * as s from './styles.jsx'
 import { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import { DebounceInput } from 'react-debounce-input'
+import { Link, useNavigate } from 'react-router-dom'
+import Home from '../../pages/Home/index.jsx'
 
 export default function HeaderTimeline() {
 	const { token, setInfoUser, infoUser } = useContext(AuthContext)
@@ -13,6 +14,12 @@ export default function HeaderTimeline() {
 	const idLocal = localStorage.getItem('id')
 	const [inputValue, setInputValue] = useState('')
 	const [infoSearch, setInfoSearch] = useState()
+	const [logout, setLogout] = useState(false)
+	function goOut() {
+		localStorage.removeItem('token')
+		localStorage.removeItem('id')
+		navigation('/')
+	}
 	useEffect(() => {
 		axios({
 			method: 'get',
@@ -43,7 +50,8 @@ export default function HeaderTimeline() {
 				console.log(error)
 			})
 	}, [inputValue])
-	return (
+
+	return !logout ? (
 		<s.HeaderContainer>
 			<img
 				className="logo"
@@ -95,7 +103,13 @@ export default function HeaderTimeline() {
 				/>
 			)}
 			<div className="account">
-				<img src={arrow} alt="" />
+				<img
+					onClick={() => {
+						setLogout(true)
+					}}
+					src={arrow}
+					alt=""
+				/>
 				{infoUser ? (
 					<img
 						className="imgProfile"
@@ -111,5 +125,88 @@ export default function HeaderTimeline() {
 				)}
 			</div>
 		</s.HeaderContainer>
+	) : (
+		<>
+			<s.HeaderContainer
+				onClick={() => {
+					setLogout(false)
+				}}
+			>
+				<img
+					className="logo"
+					src={logo}
+					alt="linkrLogo"
+					onClick={() => {
+						navigation('/timeline')
+					}}
+				/>
+				{infoSearch ? (
+					<div className="search">
+						<DebounceInput
+							minLength={3}
+							debounceTimeout={300}
+							value={inputValue}
+							onChange={(event) => {
+								setInputValue(event.target.value)
+								console.log(inputValue)
+							}}
+							placeholder="Search for people"
+						/>
+						<div className="searchContainer">
+							{infoSearch.map((item, index) => {
+								return (
+									<div
+										key={index}
+										className="infoSearch"
+										onClick={() => {
+											navigation(`/user/${item.id}`)
+										}}
+									>
+										<img src={item.picture} alt="profile" />
+										<p>{item.name}</p>
+									</div>
+								)
+							})}
+						</div>
+					</div>
+				) : (
+					<DebounceInput
+						minLength={3}
+						debounceTimeout={300}
+						value={inputValue}
+						onChange={(event) => {
+							setInputValue(event.target.value)
+							console.log(inputValue)
+						}}
+						placeholder="Search for people"
+					/>
+				)}
+				<div className="account">
+					<ion-icon name="chevron-up-outline"></ion-icon>
+					{infoUser ? (
+						<img
+							className="imgProfile"
+							src={infoUser[0].picture}
+							alt=""
+						/>
+					) : (
+						<img
+							className="imgProfile"
+							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU"
+							alt=""
+						/>
+					)}
+				</div>
+			</s.HeaderContainer>
+			<s.LogoutButton
+				onClick={() => {
+					goOut()
+				}}
+			>
+				<div>
+					<h1>Logout</h1>
+				</div>
+			</s.LogoutButton>
+		</>
 	)
 }
