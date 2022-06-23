@@ -17,6 +17,7 @@ import { CgArrowRightO } from 'react-icons/cg'
 
 export default function RepostComponent(props) {
 	const {
+		username,
 		name,
 		userID,
 		idLocal,
@@ -152,7 +153,7 @@ export default function RepostComponent(props) {
 			<s.Post key={index}>
 				<div className='icons'>
 					<img className='imgProfile' src={picture} alt='' />
-					<Likes likes={quantityLikes} id={id} />
+					<Likes name={username} likes={quantityLikes} id={id} />
 					<div
 						className='comments'
 						onClick={() => {

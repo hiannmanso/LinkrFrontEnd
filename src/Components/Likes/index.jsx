@@ -17,36 +17,25 @@ export default function Likes(props) {
     }, [peoplesWhoLiked]);
 
     async function filterUsers() {
-        const likeIt = false;
+        let likeIt = false;
         try {
             const { data } = await api.getUsersLikedOnPost(id);
-            // setUsersLikes(data);
             for (let i = 0; i < data.length; i++) {
+                console.log(data[i] === name)
                 if (data[i].name === name) {
                     setLiked(true);
+                    likeIt = true;
                 }
             }
-            setPeoplesWhoLiked(verifyUsersLiked(data));
+            setPeoplesWhoLiked(verifyUsersLiked(data, likeIt));
 
         } catch (err) {
             console.log(err);
         }
     }
 
-    async function like(postID) {
-        try {
-            await api.setLike({ postID }, token);
-            const promise = await api.getPostById(postID);
-            setTotalLikes(promise.data.quantityLikes);
-            filterUsers();
-            ReactTooltip.rebuild();
-        } catch (err) {
-            setLiked(false);
-            console.log("Error in like", err);
-        }
-    }
-
-    function verifyUsersLiked(usersLikes) {
+    function verifyUsersLiked(usersLikes, liked) {
+        console.log(liked)
         if (liked && usersLikes.length < 2) {
             return 'You liked this'
         } else if (!liked && usersLikes.length < 1) {
@@ -66,6 +55,18 @@ export default function Likes(props) {
         }
     }
 
+    async function like(postID) {
+        try {
+            await api.setLike({ postID }, token);
+            const promise = await api.getPostById(postID);
+            setTotalLikes(promise.data.quantityLikes);
+            filterUsers();
+            ReactTooltip.rebuild();
+        } catch (err) {
+            setLiked(!liked);
+            console.log("Error in like", err);
+        }
+    }
 
     return liked ? (
         <Ilike>
