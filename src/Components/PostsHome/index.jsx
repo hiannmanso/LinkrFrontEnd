@@ -17,6 +17,7 @@ import { CgArrowRightO } from 'react-icons/cg'
 
 export default function PostHome(props) {
 	const {
+		username,
 		name,
 		userID,
 		idLocal,
@@ -55,7 +56,6 @@ export default function PostHome(props) {
 	const setTextRef = (data) => {
 		editedTextRef.current = data
 		setEditedDescription(data)
-		console.log(data)
 	}
 
 	const handler = (e) => {
@@ -94,12 +94,6 @@ export default function PostHome(props) {
 		}
 	}
 
-	// function madeInput() {
-	//     setTimeout(() => {
-	//         inputRef.current.focus();
-	//     }, 2000)
-	// }
-
 	useEffect(() => {
 		if (editing) {
 			inputRef.current.focus()
@@ -118,28 +112,15 @@ export default function PostHome(props) {
 		}
 	}
 
-	function repost() {
-		axios({
-			method: 'post',
-			url: 'http://localhost:5000/repost',
-			data: {
-				postID: id,
-				repostUserID: infoUser[0].id,
-			},
-		})
-			.then((response) => {
-				console.log(response)
-			})
-			.catch((error) => {
-				console.log(error)
-			})
-	}
+
 	return (
 		<s.postContainer>
 			<s.Post key={index}>
 				<div className='icons'>
 					<img className='imgProfile' src={picture} alt='' />
-					<Likes likes={quantityLikes} id={id} />
+
+					<Likes name={username} likes={quantityLikes} id={id} />
+
 					<div
 						className='comments'
 						onClick={() => {

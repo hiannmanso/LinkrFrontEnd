@@ -143,6 +143,9 @@ export const Post = styled.div`
 			color: white;
 			font-size: 19.95px;
 		}
+		ion-icon[name="heart"] {
+        	color: red;
+		}
 		p {
 			font-family: 'Lato';
 			font-style: normal;

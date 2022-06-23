@@ -16,6 +16,7 @@ export default function HeaderTimeline() {
 	const [infoSearch, setInfoSearch] = useState()
 	const [logout, setLogout] = useState(false)
 	function goOut() {
+		console.log("click")
 		localStorage.removeItem('token')
 		localStorage.removeItem('id')
 		navigation('/')
@@ -198,11 +199,7 @@ export default function HeaderTimeline() {
 					)}
 				</div>
 			</s.HeaderContainer>
-			<s.LogoutButton
-				onClick={() => {
-					goOut()
-				}}
-			>
+			<s.LogoutButton onClick={() => goOut()}>
 				<div>
 					<h1>Logout</h1>
 				</div>

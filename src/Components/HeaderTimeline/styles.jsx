@@ -97,6 +97,7 @@ export const HeaderContainer = styled.div`
 `
 export const LogoutButton = styled.div`
 	/* margin-top: 70px; */
+	z-index: 100;
 	position: fixed;
 	top: 70px;
 	z-index: 10;
