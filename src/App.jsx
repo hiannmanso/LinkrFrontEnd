@@ -22,6 +22,7 @@ export default function App() {
 	const [checknewpost, setChecknewpost] = useState(false)
 	const [displayRT, setDisplayRT] = useState('none')
 	const [repostID, setRepostID] = useState()
+	const [usersIDFollowing, setUsersIDFollowing] = useState()
 
 	return (
 		<>
@@ -48,6 +49,8 @@ export default function App() {
 						setDisplayRT,
 						repostID,
 						setRepostID,
+						usersIDFollowing,
+						setUsersIDFollowing,
 					}}
 				>
 					<Routes>

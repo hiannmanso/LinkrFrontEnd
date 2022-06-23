@@ -24,6 +24,7 @@ export const ContainerComments = styled.div`
 	}
 
 	span {
+		padding-left: 4px;
 		font-family: 'Lato';
 		font-style: normal;
 		font-weight: 400;
