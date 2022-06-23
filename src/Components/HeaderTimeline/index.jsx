@@ -9,14 +9,20 @@ import { Link, useNavigate } from 'react-router-dom'
 import Home from '../../pages/Home/index.jsx'
 
 export default function HeaderTimeline() {
-	const { token, setInfoUser, infoUser } = useContext(AuthContext)
+	const {
+		token,
+		setInfoUser,
+		infoUser,
+		usersIDFollowing,
+		setUsersIDFollowing,
+	} = useContext(AuthContext)
 	const navigation = useNavigate()
 	const idLocal = localStorage.getItem('id')
 	const [inputValue, setInputValue] = useState('')
 	const [infoSearch, setInfoSearch] = useState()
 	const [logout, setLogout] = useState(false)
 	function goOut() {
-		console.log("click")
+		console.log('click')
 		localStorage.removeItem('token')
 		localStorage.removeItem('id')
 		navigation('/')
@@ -32,6 +38,19 @@ export default function HeaderTimeline() {
 			.then((response) => {
 				setInfoUser(response.data)
 				console.log(response)
+			})
+			.catch((error) => {
+				console.log(error)
+			})
+	}, [])
+	useEffect(() => {
+		axios({
+			method: 'get',
+			url: `http://localhost:5000/follow/${idLocal}`,
+		})
+			.then((response) => {
+				console.log('followres: ', response.data)
+				setUsersIDFollowing(response.data)
 			})
 			.catch((error) => {
 				console.log(error)
