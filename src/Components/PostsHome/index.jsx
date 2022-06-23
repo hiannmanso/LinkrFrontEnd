@@ -112,12 +112,15 @@ export default function PostHome(props) {
 		}
 	}
 
+
 	return (
 		<s.postContainer>
 			<s.Post key={index}>
 				<div className='icons'>
 					<img className='imgProfile' src={picture} alt='' />
+
 					<Likes name={username} likes={quantityLikes} id={id} />
+
 					<div
 						className='comments'
 						onClick={() => {
