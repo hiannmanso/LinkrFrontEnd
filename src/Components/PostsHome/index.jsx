@@ -56,7 +56,6 @@ export default function PostHome(props) {
 	const setTextRef = (data) => {
 		editedTextRef.current = data
 		setEditedDescription(data)
-		console.log(data)
 	}
 
 	const handler = (e) => {
