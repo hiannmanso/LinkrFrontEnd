@@ -15,7 +15,7 @@ import CommentContainer from '../CommentContainer/index.jsx'
 import axios from 'axios'
 import { CgArrowRightO } from 'react-icons/cg'
 
-export default function PostHome(props) {
+export default function RepostComponent(props) {
 	const {
 		name,
 		userID,
@@ -35,10 +35,11 @@ export default function PostHome(props) {
 		id,
 		quantityLikes,
 		modalScreen,
-		modalRepost,
 		editTextOfPost,
 		quantityComments,
 		reposts,
+		repUserID,
+		repUserNAME,
 	} = props
 	// const idLocal = localStorage.getItem('id');
 	const inputRef = useRef(null)
@@ -49,7 +50,8 @@ export default function PostHome(props) {
 	const editedTextRef = useRef(editedDescription)
 	const navigate = useNavigate()
 	const token = localStorage.getItem('token')
-	const { commentDisplay, infoUser, setRepostID } = useContext(AuthContext)
+	const { commentDisplay, infoUser, displayRT, setDisplayRT } =
+		useContext(AuthContext)
 	const [showComment, setShowComment] = useState('none')
 
 	const setTextRef = (data) => {
@@ -136,6 +138,17 @@ export default function PostHome(props) {
 	}
 	return (
 		<s.postContainer>
+			<div className='repo'>
+				<IoRepeatSharp />
+				<h1>
+					Re-posted by{' '}
+					{repUserID === idLocal ? (
+						<span>you</span>
+					) : (
+						<span>{repUserNAME} </span>
+					)}
+				</h1>
+			</div>
 			<s.Post key={index}>
 				<div className='icons'>
 					<img className='imgProfile' src={picture} alt='' />
@@ -152,8 +165,7 @@ export default function PostHome(props) {
 					<div
 						className='comments'
 						onClick={() => {
-							modalRepost()
-							setRepostID(id)
+							setDisplayRT('flex')
 							// repost()
 						}}
 					>
@@ -166,33 +178,12 @@ export default function PostHome(props) {
 						<p
 							className='username' //PEGAR ESSE STYLE DO USERNAME
 							onClick={() => {
-								navigate(`/user/${userID}`)
+								navigate(`/user/${id}`)
 							}}
 						>
 							{name}
 						</p>
-						{userID === idLocal ? (
-							<>
-								<s.editPost>
-									<ion-icon
-										onClick={() => {
-											setEditing(true)
-										}}
-										name='pencil'
-									></ion-icon>
-								</s.editPost>
-								<img
-									src={trasher}
-									alt='trasher'
-									onClick={() => {
-										modalScreen()
-										setIdPostDelete(id)
-									}}
-								/>
-							</>
-						) : (
-							<></>
-						)}
+						{userID === idLocal ? <></> : <></>}
 					</div>
 					{!editing ? (
 						<Edit description={editedDescription} />

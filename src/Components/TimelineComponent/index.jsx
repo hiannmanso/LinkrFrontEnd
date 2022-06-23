@@ -12,6 +12,7 @@ import TrendingComponent from '../TrendingComponent/index.jsx'
 import trasher from './../../assets/trasher.svg'
 import ModalDelete from '../ModalDelete/index.jsx'
 import PostHome from '../PostsHome/index.jsx'
+import RepostComponent from '../RePostComponent/index.jsx'
 
 export default function TimelineComponent() {
 	const {
@@ -27,6 +28,7 @@ export default function TimelineComponent() {
 		setIdPostDelete,
 		setChecknewpost,
 		checknewpost,
+		setDisplayRT,
 	} = useContext(AuthContext)
 	const [posts, setPosts] = useState('')
 	const [url, setUrl] = useState('')
@@ -144,64 +146,67 @@ export default function TimelineComponent() {
 	function modalScreen(item) {
 		setDisplayModal('flex')
 	}
+	function modalRepost(item) {
+		setDisplayRT('flex')
+	}
 	return (
 		<s.TimelineContainer>
 			<header>
 				<h1>timeline</h1>
 			</header>
 
-			<div className="timeline">
-				<div className="left">
+			<div className='timeline'>
+				<div className='left'>
 					<section>
-						<div className="postContainer">
+						<div className='postContainer'>
 							{infoUser ? (
 								<img
-									className="imgProfile"
+									className='imgProfile'
 									src={infoUser[0].picture}
-									alt=""
+									alt=''
 								/>
 							) : (
 								<img
-									className="imgProfile"
-									src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU"
-									alt=""
+									className='imgProfile'
+									src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU'
+									alt=''
 								/>
 							)}
 							<div>
 								<p>What are you going to share today?</p>
 								<form onSubmit={newPost}>
 									<input
-										className="url"
+										className='url'
 										value={url}
 										onChange={(e) => {
 											setUrl(e.target.value)
 										}}
-										type="text"
-										placeholder="http:// ..."
+										type='text'
+										placeholder='http:// ...'
 										disabled={btnEnable}
 									/>
 									<input
-										className="description"
+										className='description'
 										value={description}
 										onChange={(e) => {
 											setDescription(e.target.value)
 										}}
-										type="text"
-										placeholder="Awesome article about #javascript"
+										type='text'
+										placeholder='Awesome article about #javascript'
 										disabled={btnEnable}
 									/>
 									{btnEnable ? (
 										<input
-											className="submit"
-											type="submit"
-											value="Publishing..."
+											className='submit'
+											type='submit'
+											value='Publishing...'
 											disabled
 										/>
 									) : (
 										<input
-											className="submit"
-											type="submit"
-											value="Publish"
+											className='submit'
+											type='submit'
+											value='Publish'
 											disabled={btnEnable}
 										/>
 									)}
@@ -211,35 +216,98 @@ export default function TimelineComponent() {
 					</section>
 					<main>
 						<s.Timeline>
-							{posts ? (
-								posts.map((item, index) => {
-									return (
-										<PostHome
-											userID={item.id}
-											idLocal={infoUser[0].id}
-											toEdit={() => toEdit(item.id)}
-											openUrl={() => openUrl(item.url)}
-											trasher={trasher}
-											description={item.description}
-											index={index}
-											name={item.name}
-											picture={item.picture}
-											likes={item.quantityLikes}
-											id={item.postID}
-											url={item.url}
-											urlTitle={item.urlTitle}
-											urlDescription={item.urlDescription}
-											urlImage={item.urlImage}
-											quantityLikes={item.quantityLikes}
-											modalScreen={() =>
-												modalScreen(item.id)
-											}
-										/>
-									)
-								})
-							) : (
-								<h1>There are no posts yet</h1>
-							)}
+							<div className='postWComments'>
+								{posts ? (
+									posts.map((item, index) => {
+										if (item.repUserID !== null) {
+											return (
+												<RepostComponent
+													userID={item.id}
+													idLocal={infoUser[0].id}
+													toEdit={() =>
+														toEdit(item.id)
+													}
+													openUrl={() =>
+														openUrl(item.url)
+													}
+													trasher={trasher}
+													description={
+														item.description
+													}
+													index={index}
+													name={item.name}
+													picture={item.picture}
+													likes={item.quantityLikes}
+													id={item.postID}
+													url={item.url}
+													urlTitle={item.urlTitle}
+													urlDescription={
+														item.urlDescription
+													}
+													urlImage={item.urlImage}
+													quantityLikes={
+														item.quantityLikes
+													}
+													quantityComments={
+														item.quantityComments
+													}
+													repUserNAME={
+														item.repUserNAME
+													}
+													repUserID={item.repUserID}
+													reposts={item.reposts}
+													modalScreen={() =>
+														modalScreen(item.id)
+													}
+												/>
+											)
+										} else {
+											return (
+												<PostHome
+													userID={item.id}
+													idLocal={infoUser[0].id}
+													toEdit={() =>
+														toEdit(item.id)
+													}
+													openUrl={() =>
+														openUrl(item.url)
+													}
+													trasher={trasher}
+													description={
+														item.description
+													}
+													index={index}
+													name={item.name}
+													picture={item.picture}
+													likes={item.quantityLikes}
+													id={item.postID}
+													url={item.url}
+													urlTitle={item.urlTitle}
+													urlDescription={
+														item.urlDescription
+													}
+													urlImage={item.urlImage}
+													quantityLikes={
+														item.quantityLikes
+													}
+													quantityComments={
+														item.quantityComments
+													}
+													reposts={item.reposts}
+													modalScreen={() =>
+														modalScreen(item.id)
+													}
+													modalRepost={() => {
+														modalRepost(item.postID)
+													}}
+												/>
+											)
+										}
+									})
+								) : (
+									<h1>There are no posts yet</h1>
+								)}
+							</div>
 						</s.Timeline>
 					</main>
 				</div>

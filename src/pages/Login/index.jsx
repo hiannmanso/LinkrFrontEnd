@@ -52,35 +52,35 @@ export default function Login() {
 				</Slogan>
 				<SignIn onSubmit={authentication}>
 					<Input
-						type="email"
-						placeholder="e-mail"
-						name="email"
+						type='email'
+						placeholder='e-mail'
+						name='email'
 						onChange={(e) => setEmail(e.target.value)}
 						value={email}
 						required
 					/>
 					<Input
-						type="password"
-						placeholder="password"
-						name="password"
+						type='password'
+						placeholder='password'
+						name='password'
 						onChange={(e) => setPassword(e.target.value)}
 						value={password}
 						required
 					/>
 					{!loading ? (
-						<Button type="submit">
+						<Button type='submit'>
 							<p>Log In</p>
 						</Button>
 					) : (
 						<Button disabled>
 							<ThreeDots
-								color="#FFFFFF"
+								color='#FFFFFF'
 								height={30}
 								width={100}
 							/>
 						</Button>
 					)}
-					<Link to="/signup">
+					<Link to='/signup'>
 						<SignUp>First time? Create an account!</SignUp>
 					</Link>
 				</SignIn>
