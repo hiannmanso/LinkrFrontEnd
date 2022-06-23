@@ -259,6 +259,7 @@ export default function TimelineComponent() {
 													modalScreen={() =>
 														modalScreen(item.id)
 													}
+													username={infoUser[0].name}
 												/>
 											)
 										} else {
@@ -300,6 +301,7 @@ export default function TimelineComponent() {
 													modalRepost={() => {
 														modalRepost(item.postID)
 													}}
+													username={infoUser[0].name}
 												/>
 											)
 										}
