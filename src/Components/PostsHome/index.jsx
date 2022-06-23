@@ -12,6 +12,7 @@ import AuthContext from '../../contexts/AuthContext.jsx'
 
 export default function PostHome(props) {
 	const {
+		username,
 		name,
 		userID,
 		idLocal,
@@ -85,12 +86,6 @@ export default function PostHome(props) {
 		}
 	}
 
-	// function madeInput() {
-	//     setTimeout(() => {
-	//         inputRef.current.focus();
-	//     }, 2000)
-	// }
-
 	useEffect(() => {
 		if (editing) {
 			inputRef.current.focus()
@@ -102,18 +97,18 @@ export default function PostHome(props) {
 	}, [editing])
 
 	return (
-		<s.Post key={index}>
+		<s.Post key={index + id}>
 			<div className="icons">
 				<img className="imgProfile" src={picture} alt="" />
 
-				<Likes likes={quantityLikes} id={id} />
+				<Likes name={username} likes={quantityLikes} id={id} />
 			</div>
 			<div className="description">
 				<div className="first-line">
 					<p
 						className="username" //PEGAR ESSE STYLE DO USERNAME
 						onClick={() => {
-							navigate(`/user/${id}`)
+							navigate(`/user/${userID}`)
 						}}
 					>
 						{name}

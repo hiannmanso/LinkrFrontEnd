@@ -234,6 +234,7 @@ export default function TimelineComponent() {
 											modalScreen={() =>
 												modalScreen(item.id)
 											}
+											username={infoUser[0].name}
 										/>
 									)
 								})

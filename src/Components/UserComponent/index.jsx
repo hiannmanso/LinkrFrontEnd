@@ -5,11 +5,16 @@ import axios from 'axios'
 import ReactHashtag from 'react-hashtag'
 import { useNavigate, useParams } from 'react-router-dom'
 import TrendingComponent from '../TrendingComponent/index.jsx'
+import api from '../../services/api'
+import Likes from '../Likes'
+import Follow from '../Follow'
 
 export default function HashtagComponent() {
-	const { token, setInfoUser, infoUser, renderHash } = useContext(AuthContext)
+	const { setInfoUser, infoUser, renderHash } = useContext(AuthContext)
+	const token = localStorage.getItem('token');
 	const [posts, setPosts] = useState('')
 	const { userID } = useParams()
+	const [following, setFollowing] = useState(null);
 
 	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
@@ -37,6 +42,7 @@ export default function HashtagComponent() {
 				<s.Timeline>
 					<div className="left">
 						<header>
+							<Follow userID={userID} />
 							{posts ? (
 								<h1>{`${posts[0].name}'s posts`}</h1>
 							) : (
@@ -53,8 +59,7 @@ export default function HashtagComponent() {
 												src={item.picture}
 												alt=""
 											/>
-											<ion-icon name="heart-outline"></ion-icon>
-											<p>0 likes</p>
+											<Likes name={infoUser[0].name} likes={item.quantityLikes} id={item.postID} />
 										</div>
 										<div className="description">
 											<p>{item.name}</p>

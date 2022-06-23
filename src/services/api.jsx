@@ -72,6 +72,29 @@ async function editPost(id, body, token) {
     return await axios.put(`${URL}posts/${id}`, body, config);
 }
 
+async function getUsersLikedOnPost(id) {
+    return await axios.get(`${URL}likes/${id}`);
+}
+
+async function setFollowing(body, token) {
+    console.log(body);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    return await axios.post(`${URL}follow`, body, config);
+}
+
+async function getFollowing(token) {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    return await axios.get(`${URL}follow`, config);
+}
+
 const api = {
     postLogin,
     postSignUp,
@@ -80,7 +103,10 @@ const api = {
     setLike,
     editPost,
     getPostById,
-    getUsersLikes
+    getUsersLikes,
+    getUsersLikedOnPost,
+    setFollowing,
+    getFollowing
 };
 
 export default api;
