@@ -99,6 +99,7 @@ export const LogoutButton = styled.div`
 	/* margin-top: 70px; */
 	position: fixed;
 	top: 70px;
+	z-index: 10;
 	right: 0;
 	div {
 		width: 150px;

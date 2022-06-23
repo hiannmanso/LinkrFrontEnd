@@ -127,8 +127,40 @@ export const TimelineContainer = styled.div`
 `
 
 export const Timeline = styled.div``
-export const Post = styled.div`
+export const showComment = styled.div`
+	display: ${(props) => props.display};
+`
+export const postContainer = styled.div`
 	margin-bottom: 16px;
+	background: #1e1e1e;
+	border-radius: 16px;
+	.repo {
+		display: flex;
+		flex-direction: row;
+		height: 33px;
+		width: 100%;
+		font-family: 'Lato';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 11px;
+		line-height: 13px;
+		align-items: center;
+		svg {
+			padding-left: 13px;
+		}
+		h1 {
+			padding-left: 6px;
+		}
+		span:hover {
+			cursor: pointer;
+		}
+		span {
+			font-weight: 700;
+		}
+		color: #ffffff;
+	}
+`
+export const Post = styled.div`
 	position: relative;
 	width: 611px;
 	min-height: 276px;
@@ -136,8 +168,29 @@ export const Post = styled.div`
 	border-radius: 16px;
 	display: flex;
 	flex-direction: row;
+
 	header {
 		width: 100%;
+	}
+	.comments {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		p {
+			font-family: 'Lato';
+			font-style: normal;
+			font-weight: 400;
+			font-size: 11px;
+			line-height: 13px;
+			text-align: center;
+
+			color: #ffffff;
+		}
+	}
+	svg {
+		padding: 19px 0 4px 0;
+		color: white;
+		font-size: 19.95px;
 	}
 	.first-line {
 		display: flex;

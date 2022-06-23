@@ -3,8 +3,8 @@ import AuthContext from '../../contexts/AuthContext.jsx'
 import { useContext, useState } from 'react'
 import axios from 'axios'
 
-export default function ModalDelete(item) {
-	const [msgDelete, setMsgDelete] = useState('Yes, delete it')
+export default function ModalRepost(item) {
+	const [sharePost, setSharePost] = useState('Yes, share!')
 	const [btnDesabled, setBtnDesabled] = useState(false) //ARRUMAR ESSE BTN DESA
 	const {
 		displayModal,
@@ -14,58 +14,59 @@ export default function ModalDelete(item) {
 		setChecknewpost,
 		checkTrending,
 		setCheckTrending,
+		setDisplayRT,
+		displayRT,
+		infoUser,
+		repostID,
 	} = useContext(AuthContext)
-	function deletePost(item) {
-		setBtnDesabled(true)
-		setMsgDelete('loading..')
-		console.log(idPostDelete)
+	function repost() {
 		axios({
-			method: 'delete',
-			url: `http://localhost:5000/posts/${idPostDelete}`,
+			method: 'post',
+			url: 'http://localhost:5000/repost',
+			data: {
+				postID: repostID,
+				repostUserID: infoUser[0].id,
+			},
 		})
 			.then((response) => {
+				setDisplayRT('none')
 				console.log(response)
-				setDisplayModal('none')
-				setBtnDesabled(false)
 				setChecknewpost(!checknewpost)
 				setCheckTrending(!checkTrending)
-				setMsgDelete('Yes, delete it')
 			})
 			.catch((error) => {
 				console.log(error)
-				setBtnDesabled(false)
-				setDisplayModal('none')
-				alert('could not delete post')
+				setDisplayRT('none')
 			})
 	}
 	return (
-		<s.Modal display={displayModal}>
+		<s.Modal display={displayRT}>
 			<s.Opacity
 				onClick={() => {
-					setDisplayModal('none')
+					setDisplayRT('none')
 				}}
 			/>
 			<s.ModalContainer>
-				<h1>Are you sure you want to delete this post?</h1>
+				<h1>Do you want to re-post this link?</h1>
 
 				<div>
 					<button
 						className='no'
 						onClick={() => {
-							setDisplayModal('none')
+							setDisplayRT('none')
 						}}
 						disabled={btnDesabled}
 					>
-						No, go back
+						No, cancel
 					</button>
 					<button
 						className='yes'
 						onClick={() => {
-							deletePost(item)
+							repost()
 						}}
 						disabled={btnDesabled}
 					>
-						{msgDelete}
+						Yes, share!
 					</button>
 				</div>
 			</s.ModalContainer>

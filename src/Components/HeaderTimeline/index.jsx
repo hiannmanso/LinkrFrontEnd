@@ -54,15 +54,15 @@ export default function HeaderTimeline() {
 	return !logout ? (
 		<s.HeaderContainer>
 			<img
-				className="logo"
+				className='logo'
 				src={logo}
-				alt="linkrLogo"
+				alt='linkrLogo'
 				onClick={() => {
 					navigation('/timeline')
 				}}
 			/>
 			{infoSearch ? (
-				<div className="search">
+				<div className='search'>
 					<DebounceInput
 						minLength={3}
 						debounceTimeout={300}
@@ -71,19 +71,19 @@ export default function HeaderTimeline() {
 							setInputValue(event.target.value)
 							console.log(inputValue)
 						}}
-						placeholder="Search for people"
+						placeholder='Search for people'
 					/>
-					<div className="searchContainer">
+					<div className='searchContainer'>
 						{infoSearch.map((item, index) => {
 							return (
 								<div
 									key={index}
-									className="infoSearch"
+									className='infoSearch'
 									onClick={() => {
 										navigation(`/user/${item.id}`)
 									}}
 								>
-									<img src={item.picture} alt="profile" />
+									<img src={item.picture} alt='profile' />
 									<p>{item.name}</p>
 								</div>
 							)
@@ -99,28 +99,28 @@ export default function HeaderTimeline() {
 						setInputValue(event.target.value)
 						console.log(inputValue)
 					}}
-					placeholder="Search for people"
+					placeholder='Search for people'
 				/>
 			)}
-			<div className="account">
+			<div className='account'>
 				<img
 					onClick={() => {
 						setLogout(true)
 					}}
 					src={arrow}
-					alt=""
+					alt=''
 				/>
 				{infoUser ? (
 					<img
-						className="imgProfile"
+						className='imgProfile'
 						src={infoUser[0].picture}
-						alt=""
+						alt=''
 					/>
 				) : (
 					<img
-						className="imgProfile"
-						src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU"
-						alt=""
+						className='imgProfile'
+						src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU'
+						alt=''
 					/>
 				)}
 			</div>
@@ -133,15 +133,15 @@ export default function HeaderTimeline() {
 				}}
 			>
 				<img
-					className="logo"
+					className='logo'
 					src={logo}
-					alt="linkrLogo"
+					alt='linkrLogo'
 					onClick={() => {
 						navigation('/timeline')
 					}}
 				/>
 				{infoSearch ? (
-					<div className="search">
+					<div className='search'>
 						<DebounceInput
 							minLength={3}
 							debounceTimeout={300}
@@ -150,19 +150,19 @@ export default function HeaderTimeline() {
 								setInputValue(event.target.value)
 								console.log(inputValue)
 							}}
-							placeholder="Search for people"
+							placeholder='Search for people'
 						/>
-						<div className="searchContainer">
+						<div className='searchContainer'>
 							{infoSearch.map((item, index) => {
 								return (
 									<div
 										key={index}
-										className="infoSearch"
+										className='infoSearch'
 										onClick={() => {
 											navigation(`/user/${item.id}`)
 										}}
 									>
-										<img src={item.picture} alt="profile" />
+										<img src={item.picture} alt='profile' />
 										<p>{item.name}</p>
 									</div>
 								)
@@ -178,22 +178,22 @@ export default function HeaderTimeline() {
 							setInputValue(event.target.value)
 							console.log(inputValue)
 						}}
-						placeholder="Search for people"
+						placeholder='Search for people'
 					/>
 				)}
-				<div className="account">
-					<ion-icon name="chevron-up-outline"></ion-icon>
+				<div className='account'>
+					<ion-icon name='chevron-up-outline'></ion-icon>
 					{infoUser ? (
 						<img
-							className="imgProfile"
+							className='imgProfile'
 							src={infoUser[0].picture}
-							alt=""
+							alt=''
 						/>
 					) : (
 						<img
-							className="imgProfile"
-							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU"
-							alt=""
+							className='imgProfile'
+							src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU'
+							alt=''
 						/>
 					)}
 				</div>
