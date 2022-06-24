@@ -20,7 +20,7 @@ export default function HashtagComponent() {
 	console.log(userID)
 	const [following, setFollowing] = useState(null)
 	const [loading, setLoading] = useState(true)
-	const URL = 'https://linker-g3.herokuapp.com'
+	const { URL } = useContext(AuthContext)
 	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
 

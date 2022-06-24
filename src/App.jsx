@@ -23,6 +23,7 @@ export default function App() {
 	const [displayRT, setDisplayRT] = useState('none')
 	const [repostID, setRepostID] = useState()
 	const [usersIDFollowing, setUsersIDFollowing] = useState()
+	const [URL, setURL] = useState('https://linker-g3.herokuapp.com')
 
 	return (
 		<>
@@ -51,6 +52,7 @@ export default function App() {
 						setRepostID,
 						usersIDFollowing,
 						setUsersIDFollowing,
+						URL,
 					}}
 				>
 					<Routes>

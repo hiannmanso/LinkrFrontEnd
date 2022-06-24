@@ -15,7 +15,7 @@ export default function ModalDelete(item) {
 		checkTrending,
 		setCheckTrending,
 	} = useContext(AuthContext)
-	const URL = 'https://linker-g3.herokuapp.com'
+	const { URL } = useContext(AuthContext)
 	function deletePost(item) {
 		setBtnDesabled(true)
 		setMsgDelete('loading..')

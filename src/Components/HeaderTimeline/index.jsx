@@ -19,7 +19,7 @@ export default function HeaderTimeline() {
 	const [inputValue, setInputValue] = useState('')
 	const [infoSearch, setInfoSearch] = useState()
 	const [logout, setLogout] = useState(false)
-	const URL = 'https://linker-g3.herokuapp.com'
+	const { URL } = useContext(AuthContext)
 
 	function goOut() {
 		console.log('click')

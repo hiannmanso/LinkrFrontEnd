@@ -13,7 +13,7 @@ export default function HashtagComponent() {
 
 	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
-	const URL = 'https://linker-g3.herokuapp.com'
+	const { URL } = useContext(AuthContext)
 	function openUrl(url) {
 		window.open(`${url}`, '_blank')
 	}
