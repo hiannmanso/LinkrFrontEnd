@@ -32,6 +32,8 @@ export default function TimelineComponent() {
 		setChecknewpost,
 		checknewpost,
 		setDisplayRT,
+		search,
+		setSearch
 	} = useContext(AuthContext)
 	const [posts, setPosts] = useState('')
 	const [url, setUrl] = useState('')
@@ -105,7 +107,7 @@ export default function TimelineComponent() {
 				)
 				console.log(error)
 			})
-		// offset += 10
+		offset += 10
 	}
 	function handleScroll(e) {
 		if (
@@ -218,7 +220,7 @@ export default function TimelineComponent() {
 		setDisplayRT('flex')
 	}
 	return following.length > 0 && posts.length > 0 ? (
-		<s.TimelineContainer>
+		<s.TimelineContainer onClick={() => { setSearch(false) }}>
 			<div className='timeline'>
 				<div className='left'>
 					<header>
@@ -407,7 +409,7 @@ export default function TimelineComponent() {
 			</div>
 		</s.TimelineContainer>
 	) : (
-		<s.TimelineContainer>
+		<s.TimelineContainer onClick={() => { setSearch(false) }}>
 			<header>
 				<h1>timeline</h1>
 			</header>

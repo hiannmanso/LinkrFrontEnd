@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import TrendingComponent from '../TrendingComponent/index.jsx'
 
 export default function HashtagComponent() {
-	const { token, setInfoUser, infoUser, renderHash } = useContext(AuthContext)
+	const { token, setInfoUser, infoUser, renderHash, search, setSearch } = useContext(AuthContext)
 	const [posts, setPosts] = useState('')
 	const { hashtag } = useParams()
 
@@ -34,7 +34,7 @@ export default function HashtagComponent() {
 	}, [renderHash])
 
 	return (
-		<s.TimelineContainer>
+		<s.TimelineContainer onClick={() => { setSearch(false) }}>
 			<main>
 				<s.Timeline>
 					<div className='left'>

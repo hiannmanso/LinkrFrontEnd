@@ -10,7 +10,7 @@ import Likes from '../Likes'
 import Follow from '../Follow'
 
 export default function HashtagComponent() {
-	const { setInfoUser, infoUser, renderHash } = useContext(AuthContext)
+	const { setInfoUser, infoUser, renderHash, search, setSearch } = useContext(AuthContext)
 	const token = localStorage.getItem('token')
 	const idLocal = localStorage.getItem('id')
 	const [posts, setPosts] = useState('')
@@ -44,7 +44,7 @@ export default function HashtagComponent() {
 	}
 
 	return (
-		<s.TimelineContainer>
+		<s.TimelineContainer onClick={() => { setSearch(false) }}>
 			<main>
 				<s.Timeline>
 					<div className='left'>

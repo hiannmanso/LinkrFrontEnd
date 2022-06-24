@@ -9,9 +9,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import Home from '../../pages/Home/index.jsx'
 import api from '../../services/api'
 import SearchInfo from '../SearchInfo'
+import useInterval from 'use-interval'
 
 export default function HeaderTimeline() {
-	const { setInfoUser, infoUser, usersIDFollowing, setUsersIDFollowing } =
+	const { setInfoUser, infoUser, usersIDFollowing, setUsersIDFollowing, setSearch, search } =
 		useContext(AuthContext)
 	const navigation = useNavigate()
 	const idLocal = localStorage.getItem('id')
@@ -20,6 +21,13 @@ export default function HeaderTimeline() {
 	const [infoSearch, setInfoSearch] = useState()
 	const [logout, setLogout] = useState(false)
 	const { URL } = useContext(AuthContext)
+
+
+	// useInterval(() => {
+	// 	if (search) {
+	// 		setSearch(false);
+	// 	}
+	// }, 10000)
 
 	function goOut() {
 		console.log('click')
@@ -69,8 +77,10 @@ export default function HeaderTimeline() {
 			.then((response) => {
 				console.log(response.data)
 				setInfoSearch(response.data)
+				setSearch(true)
 			})
 			.catch((error) => {
+				setSearch(false)
 				console.log(error)
 			})
 	}, [inputValue])
@@ -85,7 +95,7 @@ export default function HeaderTimeline() {
 					navigation('/timeline')
 				}}
 			/>
-			{infoSearch ? (
+			{search ? (
 				<div className='search'>
 					<DebounceInput
 						minLength={3}
