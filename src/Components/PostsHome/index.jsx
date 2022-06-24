@@ -112,7 +112,6 @@ export default function PostHome(props) {
 		}
 	}
 
-
 	return (
 		<s.postContainer>
 			<s.Post key={index}>
@@ -147,7 +146,9 @@ export default function PostHome(props) {
 						<p
 							className='username' //PEGAR ESSE STYLE DO USERNAME
 							onClick={() => {
-								navigate(`/user/${userID}`)
+								navigate(`/user/${userID}`, {
+									state: { name: name },
+								})
 							}}
 						>
 							{name}
