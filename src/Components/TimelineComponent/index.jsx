@@ -92,7 +92,7 @@ export default function TimelineComponent() {
 		})
 			.then((response) => {
 				setPosts((posts) => [...posts, ...response.data])
-				if (response.data.length < 1) {
+				if (response.data.length < 1 && str !== '') {
 					setStr('No posts found from your friends')
 				}
 				console.log(response.data)
@@ -411,7 +411,7 @@ export default function TimelineComponent() {
 	) : (
 		<s.TimelineContainer onClick={() => { setSearch(false) }}>
 			<header>
-				<h1>timeline</h1>
+				<h5>timeline</h5>
 			</header>
 
 			<div className='timeline'>
@@ -473,7 +473,7 @@ export default function TimelineComponent() {
 							</div>
 						</div>
 					</section>
-					<h1>{str}</h1>
+					<h4>{str}</h4>
 				</div>
 			</div>
 		</s.TimelineContainer>
