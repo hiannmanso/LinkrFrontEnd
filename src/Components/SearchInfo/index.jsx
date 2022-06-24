@@ -22,7 +22,7 @@ export default function SearchInfo(props) {
     return (
         <div key={index} className='infoSearch'
             onClick={() => {
-                navigate('/user/' + userID)
+                navigate(`/user/${userID}`, { state: { name: name } });
                 navigate(0)
             }}
         >
