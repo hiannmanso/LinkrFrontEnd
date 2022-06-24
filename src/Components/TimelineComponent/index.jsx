@@ -105,7 +105,7 @@ export default function TimelineComponent() {
 				)
 				console.log(error)
 			})
-		// offset += 10
+		offset += 10
 	}
 	function handleScroll(e) {
 		if (
