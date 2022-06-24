@@ -54,7 +54,7 @@ export default function RepostComponent(props) {
 	const { commentDisplay, infoUser, displayRT, setDisplayRT } =
 		useContext(AuthContext)
 	const [showComment, setShowComment] = useState('none')
-	const URL = 'https://linker-g3.herokuapp.com'
+	const { URL } = useContext(AuthContext)
 	const setTextRef = (data) => {
 		editedTextRef.current = data
 		setEditedDescription(data)

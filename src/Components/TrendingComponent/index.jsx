@@ -8,7 +8,7 @@ export default function TrendingComponent() {
 	const { renderHash, setRenderHash, checkTrending } = useContext(AuthContext)
 	const [hash, setHash] = useState()
 	const navigate = useNavigate()
-	const URL = 'https://linker-g3.herokuapp.com'
+	const { URL } = useContext(AuthContext)
 	useEffect(() => {
 		axios({
 			method: 'get',

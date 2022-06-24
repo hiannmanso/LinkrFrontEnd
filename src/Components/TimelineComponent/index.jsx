@@ -48,7 +48,7 @@ export default function TimelineComponent() {
 	const [following, setFollowing] = useState([])
 	const [str, setStr] = useState('')
 	let offset = 0
-	const URL = 'https://linker-g3.herokuapp.com'
+	const { URL } = useContext(AuthContext)
 	// const [newPosts, setNewPosts] = useState(0);
 	// const [hasNewPosts, setHasNewPosts] = useState(false);
 	const [loadMore, setLoadMore] = useState('')

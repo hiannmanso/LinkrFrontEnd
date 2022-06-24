@@ -15,7 +15,8 @@ export default function CommentContainer({ userID, postID }) {
 	const [commentInput, setCommentInput] = useState()
 	const [comments, setComments] = useState()
 	const [bolleanComment, setBolleanComment] = useState(false)
-	const URL = 'https://linker-g3.herokuapp.com'
+	const { URL } = useContext(AuthContext)
+
 	useEffect(() => {
 		axios({
 			method: 'get',
