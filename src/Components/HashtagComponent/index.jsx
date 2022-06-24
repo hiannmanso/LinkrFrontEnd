@@ -14,6 +14,7 @@ export default function HashtagComponent() {
 	const { setInfoUser, infoUser, renderHash, setDisplayModal, setDisplayRT } =
 		useContext(AuthContext)
 	const [posts, setPosts] = useState('')
+	const token = localStorage.getItem('token')
 	const { hashtag } = useParams()
 	const tokenLocal = localStorage.getItem('token')
 	const [checknewpost, setChecknewpost] = useState(false)
@@ -28,6 +29,9 @@ export default function HashtagComponent() {
 		axios({
 			method: 'get',
 			url: `${URL}/hashtag/${hashtag}`,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
 		})
 			.then((response) => {
 				setPosts(response.data)
