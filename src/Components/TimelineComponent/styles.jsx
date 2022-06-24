@@ -12,7 +12,18 @@ export const TimelineContainer = styled.div`
 		display: flex;
 		flex-direction: row;
 		.left {
+			.finish {
+				font-family: 'Oswald';
+				font-style: normal;
+				font-weight: 700;
+				font-size: 27px;
+				line-height: 40px;
+				/* identical to box height */
+
+				color: #ffffff;
+			}
 			display: flex;
+
 			flex-direction: column;
 			justify-content: flex-start;
 			margin-right: 25px;
@@ -315,4 +326,32 @@ export const editPost = styled.div`
 	position: absolute;
 	top: 0;
 	right: 50px;
+`
+export const NewPostBox = styled.div`
+	width: 611px;
+	height: 61px;
+	left: 241px;
+	top: 481px;
+	margin-bottom: 17px;
+
+	background: #1877f2;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 16px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	svg {
+		color: #ffffff;
+		padding-left: 14px;
+	}
+	h1 {
+		font-family: 'Lato';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 19px;
+
+		color: #ffffff;
+	}
 `
