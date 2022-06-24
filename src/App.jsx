@@ -24,6 +24,8 @@ export default function App() {
 	const [repostID, setRepostID] = useState()
 	const [usersIDFollowing, setUsersIDFollowing] = useState()
 	const [URL, setURL] = useState('https://linker-g3.herokuapp.com')
+	const [search, setSearch] = useState(false)
+	// const [URL, setURL] = useState('localhost:5000')
 
 	return (
 		<>
@@ -53,6 +55,8 @@ export default function App() {
 						usersIDFollowing,
 						setUsersIDFollowing,
 						URL,
+						search,
+						setSearch
 					}}
 				>
 					<Routes>

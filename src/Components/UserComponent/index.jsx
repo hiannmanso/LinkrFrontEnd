@@ -12,8 +12,9 @@ import PostHome from '../PostsHome/index.jsx'
 import trasher from './../../assets/trasher.svg'
 import RepostComponent from '../RePostComponent/index.jsx'
 
+
 export default function UserComponent() {
-	const { setInfoUser, infoUser, renderHash, setDisplayModal, setDisplayRT } =
+	const { setInfoUser, infoUser, renderHash, setDisplayModal, setDisplayRT, search, setSearch  } =
 		useContext(AuthContext)
 	const token = localStorage.getItem('token')
 	const idLocal = localStorage.getItem('id')
@@ -63,7 +64,7 @@ export default function UserComponent() {
 	}
 
 	return (
-		<s.TimelineContainer>
+		<s.TimelineContainer onClick={() => { setSearch(false) }}>
 			<main>
 				<s.Timeline>
 					<div className='left'>

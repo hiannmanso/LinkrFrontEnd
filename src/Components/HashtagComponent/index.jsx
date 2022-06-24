@@ -11,7 +11,7 @@ import RepostComponent from '../RePostComponent/index.jsx'
 import api from '../../services/api'
 
 export default function HashtagComponent() {
-	const { setInfoUser, infoUser, renderHash, setDisplayModal, setDisplayRT } =
+	const { setInfoUser, infoUser, renderHash, setDisplayModal, setDisplayRT, search, setSearch } =
 		useContext(AuthContext)
 	const [posts, setPosts] = useState('')
 	const token = localStorage.getItem('token')
@@ -59,7 +59,7 @@ export default function HashtagComponent() {
 	}
 
 	return (
-		<s.TimelineContainer>
+		<s.TimelineContainer onClick={() => { setSearch(false) }}>
 			<main>
 				<s.Timeline>
 					<div className='left'>
