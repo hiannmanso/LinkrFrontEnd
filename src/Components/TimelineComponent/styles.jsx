@@ -8,6 +8,22 @@ export const TimelineContainer = styled.div`
 	position: relative;
 	margin-top: 100px;
 
+	h4{
+		font-family: 'Oswald';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 28px;
+		line-height: 64px;
+
+		color: #ffffff;
+	}
+
+	h5{
+		position: absolute;
+		top: 15px;
+		left: 610px;
+	}
+
 	.timeline {
 		display: flex;
 		flex-direction: row;
