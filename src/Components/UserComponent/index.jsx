@@ -8,9 +8,13 @@ import TrendingComponent from '../TrendingComponent/index.jsx'
 import api from '../../services/api'
 import Likes from '../Likes'
 import Follow from '../Follow'
+import PostHome from '../PostsHome/index.jsx'
+import trasher from './../../assets/trasher.svg'
+import RepostComponent from '../RePostComponent/index.jsx'
 
-export default function HashtagComponent() {
-	const { setInfoUser, infoUser, renderHash } = useContext(AuthContext)
+export default function UserComponent() {
+	const { setInfoUser, infoUser, renderHash, setDisplayModal, setDisplayRT } =
+		useContext(AuthContext)
 	const token = localStorage.getItem('token')
 	const idLocal = localStorage.getItem('id')
 	const [posts, setPosts] = useState('')
@@ -23,7 +27,7 @@ export default function HashtagComponent() {
 	const { URL } = useContext(AuthContext)
 	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
-
+	const tokenLocal = localStorage.getItem('token')
 	useEffect(() => {
 		axios({
 			method: 'get',
@@ -38,9 +42,21 @@ export default function HashtagComponent() {
 				console.log(error)
 			})
 	}, [])
-
+	function modalScreen(item) {
+		setDisplayModal('flex')
+	}
+	function modalRepost(item) {
+		setDisplayRT('flex')
+	}
 	function openUrl(url) {
 		window.open(`${url}`, '_blank')
+	}
+	async function toEdit(id, description) {
+		try {
+			await api.editPost(id, { description }, tokenLocal)
+		} catch (err) {
+			console.log('Deu erro na edição', err)
+		}
 	}
 
 	return (
@@ -58,66 +74,70 @@ export default function HashtagComponent() {
 						</header>
 						{posts ? (
 							posts.map((item, index) => {
-								return (
-									<s.Post key={index}>
-										<div className='icons'>
-											<img
-												className='imgProfile'
-												src={item.picture}
-												alt=''
-											/>
-											<Likes
-												name={infoUser[0].name}
-												likes={item.quantityLikes}
-												id={item.postID}
-											/>
-										</div>
-										<div className='description'>
-											<p>{item.name}</p>
-											{item.description ? (
-												<h2>
-													<ReactHashtag
-														onHashtagClick={(
-															hashtagValue
-														) => {
-															navigate(
-																`/hashtag/${hashtagValue
-																	.replace(
-																		'#',
-																		''
-																	)
-																	.toLowerCase()}`
-															)
-														}}
-													>
-														{item.description}
-													</ReactHashtag>
-												</h2>
-											) : (
-												<></>
-											)}
-
-											<div
-												className='infosUrl'
-												onClick={() =>
-													openUrl(item.url)
-												}
-											>
-												<div>
-													<p>{item.urlTitle}</p>
-													<h1>
-														{item.urlDescription}
-													</h1>
-													<h2>{item.url}</h2>
-												</div>
-												<img
-													src={item.urlImage}
-													alt=''
-												/>
-											</div>
-										</div>
-									</s.Post>
-								)
+								if (item.repUserID !== null) {
+									return (
+										<RepostComponent
+											userID={item.id}
+											idLocal={infoUser[0].id}
+											toEdit={() => toEdit(item.id)}
+											openUrl={() => openUrl(item.url)}
+											trasher={trasher}
+											description={item.description}
+											index={index}
+											name={item.name}
+											picture={item.picture}
+											likes={item.quantityLikes}
+											id={item.postID}
+											url={item.url}
+											urlTitle={item.urlTitle}
+											urlDescription={item.urlDescription}
+											urlImage={item.urlImage}
+											quantityLikes={item.quantityLikes}
+											quantityComments={
+												item.quantityComments
+											}
+											repUserNAME={item.repUserNAME}
+											repUserID={item.repUserID}
+											reposts={item.reposts}
+											modalScreen={() =>
+												modalScreen(item.id)
+											}
+											username={infoUser[0].name}
+										/>
+									)
+								} else {
+									return (
+										<PostHome
+											userID={item.id}
+											idLocal={infoUser[0].id}
+											toEdit={() => toEdit(item.id)}
+											openUrl={() => openUrl(item.url)}
+											trasher={trasher}
+											description={item.description}
+											index={index}
+											name={item.name}
+											picture={item.picture}
+											likes={item.quantityLikes}
+											id={item.postID}
+											url={item.url}
+											urlTitle={item.urlTitle}
+											urlDescription={item.urlDescription}
+											urlImage={item.urlImage}
+											quantityLikes={item.quantityLikes}
+											quantityComments={
+												item.quantityComments
+											}
+											reposts={item.reposts}
+											modalScreen={() =>
+												modalScreen(item.id)
+											}
+											modalRepost={() => {
+												modalRepost(item.postID)
+											}}
+											username={infoUser[0].name}
+										/>
+									)
+								}
 							})
 						) : (
 							<header>

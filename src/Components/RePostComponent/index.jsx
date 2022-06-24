@@ -179,7 +179,9 @@ export default function RepostComponent(props) {
 						<p
 							className='username' //PEGAR ESSE STYLE DO USERNAME
 							onClick={() => {
-								navigate(`/user/${id}`)
+								navigate(`/user/${userID}`, {
+									state: { name: name },
+								})
 							}}
 						>
 							{name}
