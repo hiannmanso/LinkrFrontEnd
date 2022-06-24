@@ -14,6 +14,7 @@ export default function HashtagComponent() {
 	const token = localStorage.getItem('token');
 	const [posts, setPosts] = useState('')
 	const { userID } = useParams()
+	console.log(userID)
 	const [following, setFollowing] = useState(null);
 
 	const [checknewpost, setChecknewpost] = useState(false)
@@ -32,9 +33,13 @@ export default function HashtagComponent() {
 				console.log(error)
 			})
 	}, [])
+
+
+
 	function openUrl(url) {
 		window.open(`${url}`, '_blank')
 	}
+
 
 	return (
 		<s.TimelineContainer>
