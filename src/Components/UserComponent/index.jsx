@@ -32,6 +32,9 @@ export default function UserComponent() {
 		axios({
 			method: 'get',
 			url: `${URL}/posts/${userID}`,
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
 		})
 			.then((response) => {
 				setPosts(response.data)
