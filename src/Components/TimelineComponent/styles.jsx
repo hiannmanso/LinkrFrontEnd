@@ -359,17 +359,16 @@ export const LoadMorePosts = styled.button`
 	width: 611px;
 	height: 61px;
 	border-radius: 16px;
-	background-color: #1877F2;
+	background-color: #1877f2;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
-	p{
-		color: #FFFFFF;
+	p {
+		color: #ffffff;
 		font-family: 'Lato';
 		font-size: 16px;
 		font-weight: 400;
 	}
-
 `

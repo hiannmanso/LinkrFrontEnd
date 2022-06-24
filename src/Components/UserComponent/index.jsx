@@ -11,27 +11,27 @@ import Follow from '../Follow'
 
 export default function HashtagComponent() {
 	const { setInfoUser, infoUser, renderHash } = useContext(AuthContext)
-	const token = localStorage.getItem('token');
-	const idLocal = localStorage.getItem('id');
+	const token = localStorage.getItem('token')
+	const idLocal = localStorage.getItem('id')
 	const [posts, setPosts] = useState('')
 	const { userID } = useParams()
-	const { state } = useLocation();
-	const { name } = state;
+	const { state } = useLocation()
+	const { name } = state
 	console.log(userID)
-	const [following, setFollowing] = useState(null);
-	const [loading, setLoading] = useState(true);
-
+	const [following, setFollowing] = useState(null)
+	const [loading, setLoading] = useState(true)
+	const URL = 'https://linker-g3.herokuapp.com'
 	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
 
 	useEffect(() => {
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/posts/${userID}`,
+			url: `${URL}/posts/${userID}`,
 		})
 			.then((response) => {
 				setPosts(response.data)
-				setLoading(false);
+				setLoading(false)
 				console.log(response.data)
 			})
 			.catch((error) => {
@@ -39,38 +39,40 @@ export default function HashtagComponent() {
 			})
 	}, [])
 
-
-
 	function openUrl(url) {
 		window.open(`${url}`, '_blank')
 	}
-
 
 	return (
 		<s.TimelineContainer>
 			<main>
 				<s.Timeline>
-					<div className="left">
+					<div className='left'>
 						<header>
-							{userID != idLocal ? <Follow userID={userID} /> : <></>}
-							{(
-								<h1>{`${name}'s posts`}</h1>
-							)
-							}
+							{userID != idLocal ? (
+								<Follow userID={userID} />
+							) : (
+								<></>
+							)}
+							{<h1>{`${name}'s posts`}</h1>}
 						</header>
 						{posts ? (
 							posts.map((item, index) => {
 								return (
 									<s.Post key={index}>
-										<div className="icons">
+										<div className='icons'>
 											<img
-												className="imgProfile"
+												className='imgProfile'
 												src={item.picture}
-												alt=""
+												alt=''
 											/>
-											<Likes name={infoUser[0].name} likes={item.quantityLikes} id={item.postID} />
+											<Likes
+												name={infoUser[0].name}
+												likes={item.quantityLikes}
+												id={item.postID}
+											/>
 										</div>
-										<div className="description">
+										<div className='description'>
 											<p>{item.name}</p>
 											{item.description ? (
 												<h2>
@@ -96,7 +98,7 @@ export default function HashtagComponent() {
 											)}
 
 											<div
-												className="infosUrl"
+												className='infosUrl'
 												onClick={() =>
 													openUrl(item.url)
 												}
@@ -110,7 +112,7 @@ export default function HashtagComponent() {
 												</div>
 												<img
 													src={item.urlImage}
-													alt=""
+													alt=''
 												/>
 											</div>
 										</div>

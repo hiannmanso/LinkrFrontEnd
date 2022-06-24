@@ -13,7 +13,7 @@ export default function HashtagComponent() {
 
 	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
-
+	const URL = 'https://linker-g3.herokuapp.com'
 	function openUrl(url) {
 		window.open(`${url}`, '_blank')
 	}
@@ -22,7 +22,7 @@ export default function HashtagComponent() {
 		console.log(hashtag)
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/hashtag/${hashtag}`,
+			url: `${URL}/hashtag/${hashtag}`,
 		})
 			.then((response) => {
 				setPosts(response.data)
@@ -37,7 +37,7 @@ export default function HashtagComponent() {
 		<s.TimelineContainer>
 			<main>
 				<s.Timeline>
-					<div className="left">
+					<div className='left'>
 						<header>
 							<h1>#{hashtag}</h1>
 						</header>
@@ -45,18 +45,18 @@ export default function HashtagComponent() {
 							posts.map((item, index) => {
 								return (
 									<s.Post key={index}>
-										<div className="icons">
+										<div className='icons'>
 											<img
-												className="imgProfile"
+												className='imgProfile'
 												src={item.picture}
-												alt=""
+												alt=''
 											/>
-											<ion-icon name="heart-outline"></ion-icon>
+											<ion-icon name='heart-outline'></ion-icon>
 											<p>0 likes</p>
 										</div>
-										<div className="description">
+										<div className='description'>
 											<p
-												className="username"
+												className='username'
 												onClick={() => {
 													navigate(`/user/${item.id}`)
 												}}
@@ -87,7 +87,7 @@ export default function HashtagComponent() {
 											)}
 
 											<div
-												className="infosUrl"
+												className='infosUrl'
 												onClick={() =>
 													openUrl(item.url)
 												}
@@ -101,7 +101,7 @@ export default function HashtagComponent() {
 												</div>
 												<img
 													src={item.urlImage}
-													alt=""
+													alt=''
 												/>
 											</div>
 										</div>

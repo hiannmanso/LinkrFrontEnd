@@ -45,54 +45,53 @@ export default function TimelineComponent() {
 	const [liked, setLiked] = useState(false)
 	const [finishTL, setFinishTL] = useState(false)
 	const [countNewPosts, setCountNewPosts] = useState(0)
-	const [following, setFollowing] = useState([]);
-	const [str, setStr] = useState('');
+	const [following, setFollowing] = useState([])
+	const [str, setStr] = useState('')
 	let offset = 0
+	const URL = 'https://linker-g3.herokuapp.com'
 	// const [newPosts, setNewPosts] = useState(0);
 	// const [hasNewPosts, setHasNewPosts] = useState(false);
-	const [loadMore, setLoadMore] = useState('');
-
+	const [loadMore, setLoadMore] = useState('')
 
 	useInterval(async () => {
 		try {
-			const { data } = await api.getPosts(tokenLocal);
+			const { data } = await api.getPosts(tokenLocal)
 			if (data.length > posts.length) {
 				// setHasNewPosts(true);
-				setCountNewPosts(data.length - posts.length);
-				setLoadMore(data);
+				setCountNewPosts(data.length - posts.length)
+				setLoadMore(data)
 			} else {
-				setCountNewPosts(0);
+				setCountNewPosts(0)
 			}
 		} catch (err) {
-			console.log("Error in verify new posts", err);
+			console.log('Error in verify new posts', err)
 		}
-	}, 15000);
-
+	}, 15000)
 
 	useEffect(async () => {
 		try {
-			const { data } = await api.getFollowing(tokenLocal);
+			const { data } = await api.getFollowing(tokenLocal)
 			if (data.length < 1) {
-				setStr("You don't follow anyone yet. Search for new friends!");
+				setStr("You don't follow anyone yet. Search for new friends!")
 			}
-			setFollowing(data);
+			setFollowing(data)
 		} catch (err) {
-			console.log("Error in get users i'm following");
+			console.log("Error in get users i'm following")
 		}
-	}, []);
+	}, [])
 
 	function getPosts() {
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/posts?limit=10&offset=${offset}`,
+			url: `${URL}/posts?limit=10&offset=${offset}`,
 			headers: {
 				Authorization: `Bearer ${tokenLocal}`,
-			}
+			},
 		})
 			.then((response) => {
 				setPosts((posts) => [...posts, ...response.data])
 				if (response.data.length < 1) {
-					setStr("No posts found from your friends");
+					setStr('No posts found from your friends')
 				}
 				console.log(response.data)
 				if (response.data.length < 1) {
@@ -123,8 +122,8 @@ export default function TimelineComponent() {
 	}, [checknewpost])
 
 	useEffect(async () => {
-		const { data } = await api.getFollowing(tokenLocal);
-		setFollowing(data);
+		const { data } = await api.getFollowing(tokenLocal)
+		setFollowing(data)
 	}, [])
 
 	useEffect(() => {
@@ -153,7 +152,7 @@ export default function TimelineComponent() {
 		if (token) {
 			axios({
 				method: 'post',
-				url: 'http://localhost:5000/posts',
+				url: `${URL}/posts`,
 				data: {
 					url,
 					description,
@@ -186,7 +185,7 @@ export default function TimelineComponent() {
 			await setBtnEnable(true)
 			axios({
 				method: 'post',
-				url: 'http://localhost:5000/posts',
+				url: `${URL}/posts`,
 				data: {
 					url,
 					description,
@@ -211,8 +210,6 @@ export default function TimelineComponent() {
 				})
 		}
 	}
-
-
 
 	function modalScreen(item) {
 		setDisplayModal('flex')
@@ -286,20 +283,22 @@ export default function TimelineComponent() {
 					</section>
 					<main>
 						<>
-							{countNewPosts > 0 ?
-								<s.NewPostBox onClick={() => {
-									setPosts(loadMore)
-									setCountNewPosts(0);
-									navigate(0)
-								}}>
-
-									<h1>{countNewPosts} new posts, load more!</h1>
+							{countNewPosts > 0 ? (
+								<s.NewPostBox
+									onClick={() => {
+										setPosts(loadMore)
+										setCountNewPosts(0)
+										navigate(0)
+									}}
+								>
+									<h1>
+										{countNewPosts} new posts, load more!
+									</h1>
 									<IoReloadOutline />
 								</s.NewPostBox>
-								:
-								<>
-								</>
-							}
+							) : (
+								<></>
+							)}
 						</>
 						<s.Timeline>
 							<div className='postWComments'>
@@ -407,76 +406,74 @@ export default function TimelineComponent() {
 				<TrendingComponent />
 			</div>
 		</s.TimelineContainer>
-	) :
-		(
-			<s.TimelineContainer>
-				<header>
-					<h1>timeline</h1>
-				</header>
+	) : (
+		<s.TimelineContainer>
+			<header>
+				<h1>timeline</h1>
+			</header>
 
-				<div className='timeline'>
-					<div className='left'>
-						<section>
-							<div className='postContainer'>
-								{infoUser ? (
-									<img
-										className='imgProfile'
-										src={infoUser[0].picture}
-										alt=''
+			<div className='timeline'>
+				<div className='left'>
+					<section>
+						<div className='postContainer'>
+							{infoUser ? (
+								<img
+									className='imgProfile'
+									src={infoUser[0].picture}
+									alt=''
+								/>
+							) : (
+								<img
+									className='imgProfile'
+									src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU'
+									alt=''
+								/>
+							)}
+							<div>
+								<p>What are you going to share today?</p>
+								<form onSubmit={newPost}>
+									<input
+										className='url'
+										value={url}
+										onChange={(e) => {
+											setUrl(e.target.value)
+										}}
+										type='text'
+										placeholder='http:// ...'
+										disabled={btnEnable}
 									/>
-								) : (
-									<img
-										className='imgProfile'
-										src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYZIc2waAh8IoRnPZ4wogdR9iyyVCv_myMLA&usqp=CAU'
-										alt=''
+									<input
+										className='description'
+										value={description}
+										onChange={(e) => {
+											setDescription(e.target.value)
+										}}
+										type='text'
+										placeholder='Awesome article about #javascript'
+										disabled={btnEnable}
 									/>
-								)}
-								<div>
-									<p>What are you going to share today?</p>
-									<form onSubmit={newPost}>
+									{btnEnable ? (
 										<input
-											className='url'
-											value={url}
-											onChange={(e) => {
-												setUrl(e.target.value)
-											}}
-											type='text'
-											placeholder='http:// ...'
+											className='submit'
+											type='submit'
+											value='Publishing...'
+											disabled
+										/>
+									) : (
+										<input
+											className='submit'
+											type='submit'
+											value='Publish'
 											disabled={btnEnable}
 										/>
-										<input
-											className='description'
-											value={description}
-											onChange={(e) => {
-												setDescription(e.target.value)
-											}}
-											type='text'
-											placeholder='Awesome article about #javascript'
-											disabled={btnEnable}
-										/>
-										{btnEnable ? (
-											<input
-												className='submit'
-												type='submit'
-												value='Publishing...'
-												disabled
-											/>
-										) : (
-											<input
-												className='submit'
-												type='submit'
-												value='Publish'
-												disabled={btnEnable}
-											/>
-										)}
-									</form>
-								</div>
+									)}
+								</form>
 							</div>
-						</section>
-						<h1>{str}</h1>
-					</div>
+						</div>
+					</section>
+					<h1>{str}</h1>
 				</div>
-			</s.TimelineContainer>
-
-		)
+			</div>
+		</s.TimelineContainer>
+	)
 }

@@ -11,19 +11,15 @@ import api from '../../services/api'
 import SearchInfo from '../SearchInfo'
 
 export default function HeaderTimeline() {
-	const {
-		setInfoUser,
-		infoUser,
-		usersIDFollowing,
-		setUsersIDFollowing,
-	} = useContext(AuthContext)
+	const { setInfoUser, infoUser, usersIDFollowing, setUsersIDFollowing } =
+		useContext(AuthContext)
 	const navigation = useNavigate()
 	const idLocal = localStorage.getItem('id')
 	const token = localStorage.getItem('token')
 	const [inputValue, setInputValue] = useState('')
 	const [infoSearch, setInfoSearch] = useState()
 	const [logout, setLogout] = useState(false)
-
+	const URL = 'https://linker-g3.herokuapp.com'
 
 	function goOut() {
 		console.log('click')
@@ -35,10 +31,10 @@ export default function HeaderTimeline() {
 	useEffect(() => {
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/user/${idLocal}`,
+			url: `${URL}/user/${idLocal}`,
 			headers: {
 				authorization: `Bearer ${token}`,
-			}
+			},
 		})
 			.then((response) => {
 				setInfoUser(response.data)
@@ -51,7 +47,7 @@ export default function HeaderTimeline() {
 	useEffect(() => {
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/follow/${idLocal}`,
+			url: `${URL}/follow/${idLocal}`,
 		})
 			.then((response) => {
 				console.log('followres: ', response.data)
@@ -65,10 +61,10 @@ export default function HeaderTimeline() {
 	useEffect(() => {
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/users/${inputValue}`,
+			url: `${URL}/users/${inputValue}`,
 			headers: {
 				authorization: `Bearer ${token}`,
-			}
+			},
 		})
 			.then((response) => {
 				console.log(response.data)
@@ -104,7 +100,14 @@ export default function HeaderTimeline() {
 					<div className='searchContainer'>
 						{infoSearch.map((item, index) => {
 							return (
-								<SearchInfo index={index} name={item.name} picture={item.picture} userID={item.id} idLocal={idLocal} token={token} />
+								<SearchInfo
+									index={index}
+									name={item.name}
+									picture={item.picture}
+									userID={item.id}
+									idLocal={idLocal}
+									token={token}
+								/>
 							)
 						})}
 					</div>
