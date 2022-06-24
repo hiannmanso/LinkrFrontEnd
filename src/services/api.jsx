@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = 'http://localhost:5000/'
+const URL = 'https://linker-g3.herokuapp.com/'
 
 async function postLogin(body) {
 	return await axios.post(`${URL}signin`, body)
@@ -94,7 +94,7 @@ async function getPosts(token) {
 			Authorization: `Bearer ${token}`,
 		},
 	}
-	return await axios.get(`${URL}posts`, config);
+	return await axios.get(`${URL}posts`, config)
 }
 
 const api = {
@@ -109,7 +109,7 @@ const api = {
 	getUsersLikedOnPost,
 	setFollowing,
 	getFollowing,
-	getPosts
+	getPosts,
 }
 
 export default api

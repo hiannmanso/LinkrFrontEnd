@@ -54,7 +54,7 @@ export default function RepostComponent(props) {
 	const { commentDisplay, infoUser, displayRT, setDisplayRT } =
 		useContext(AuthContext)
 	const [showComment, setShowComment] = useState('none')
-
+	const URL = 'https://linker-g3.herokuapp.com'
 	const setTextRef = (data) => {
 		editedTextRef.current = data
 		setEditedDescription(data)
@@ -124,7 +124,7 @@ export default function RepostComponent(props) {
 	function repost() {
 		axios({
 			method: 'post',
-			url: 'http://localhost:5000/repost',
+			url: `${URL}/repost`,
 			data: {
 				postID: id,
 				repostUserID: infoUser[0].id,

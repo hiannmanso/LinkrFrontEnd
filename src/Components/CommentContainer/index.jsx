@@ -15,10 +15,11 @@ export default function CommentContainer({ userID, postID }) {
 	const [commentInput, setCommentInput] = useState()
 	const [comments, setComments] = useState()
 	const [bolleanComment, setBolleanComment] = useState(false)
+	const URL = 'https://linker-g3.herokuapp.com'
 	useEffect(() => {
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/comments/${postID}`,
+			url: `${URL}/comments/${postID}`,
 		})
 			.then((response) => {
 				console.log('comments', response.data)
@@ -32,7 +33,7 @@ export default function CommentContainer({ userID, postID }) {
 	function showComments() {
 		axios({
 			method: 'get',
-			url: `http://localhost:5000/comments/${postID}`,
+			url: `${URL}/comments/${postID}`,
 		})
 			.then((response) => {
 				console.log(response.data)
@@ -47,7 +48,7 @@ export default function CommentContainer({ userID, postID }) {
 		if (commentInput) {
 			axios({
 				method: 'post',
-				url: 'http://localhost:5000/comments',
+				url: `${URL}/comments`,
 				data: {
 					userID: infoUser[0].id,
 					postID,

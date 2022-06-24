@@ -8,10 +8,11 @@ export default function TrendingComponent() {
 	const { renderHash, setRenderHash, checkTrending } = useContext(AuthContext)
 	const [hash, setHash] = useState()
 	const navigate = useNavigate()
+	const URL = 'https://linker-g3.herokuapp.com'
 	useEffect(() => {
 		axios({
 			method: 'get',
-			url: 'http://localhost:5000/ranking',
+			url: `${URL}/ranking`,
 		})
 			.then((response) => {
 				console.log(response.data)
@@ -23,11 +24,11 @@ export default function TrendingComponent() {
 	}, [checkTrending])
 	return (
 		<s.TrendingContainer>
-			<header className="header">
+			<header className='header'>
 				<p>trending</p>
 			</header>
 			<main>
-				<div className="hashtags">
+				<div className='hashtags'>
 					{hash ? (
 						hash.map((item, index) => {
 							return (

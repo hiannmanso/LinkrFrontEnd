@@ -15,13 +15,14 @@ export default function ModalDelete(item) {
 		checkTrending,
 		setCheckTrending,
 	} = useContext(AuthContext)
+	const URL = 'https://linker-g3.herokuapp.com'
 	function deletePost(item) {
 		setBtnDesabled(true)
 		setMsgDelete('loading..')
 		console.log(idPostDelete)
 		axios({
 			method: 'delete',
-			url: `http://localhost:5000/posts/${idPostDelete}`,
+			url: `${URL}/posts/${idPostDelete}`,
 		})
 			.then((response) => {
 				console.log(response)

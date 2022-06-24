@@ -19,10 +19,11 @@ export default function ModalRepost(item) {
 		infoUser,
 		repostID,
 	} = useContext(AuthContext)
+	const URL = 'https://linker-g3.herokuapp.com'
 	function repost() {
 		axios({
 			method: 'post',
-			url: 'http://localhost:5000/repost',
+			url: `${URL}/repost`,
 			data: {
 				postID: repostID,
 				repostUserID: infoUser[0].id,
