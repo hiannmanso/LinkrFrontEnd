@@ -11,7 +11,12 @@ import api from '../../services/api'
 import SearchInfo from '../SearchInfo'
 
 export default function HeaderTimeline() {
-	const { setInfoUser, infoUser } = useContext(AuthContext)
+	const {
+		setInfoUser,
+		infoUser,
+		usersIDFollowing,
+		setUsersIDFollowing,
+	} = useContext(AuthContext)
 	const navigation = useNavigate()
 	const idLocal = localStorage.getItem('id')
 	const token = localStorage.getItem('token')
@@ -21,7 +26,7 @@ export default function HeaderTimeline() {
 
 
 	function goOut() {
-		console.log("click")
+		console.log('click')
 		localStorage.removeItem('token')
 		localStorage.removeItem('id')
 		navigation('/')
@@ -38,6 +43,19 @@ export default function HeaderTimeline() {
 			.then((response) => {
 				setInfoUser(response.data)
 				console.log(response)
+			})
+			.catch((error) => {
+				console.log(error)
+			})
+	}, [])
+	useEffect(() => {
+		axios({
+			method: 'get',
+			url: `http://localhost:5000/follow/${idLocal}`,
+		})
+			.then((response) => {
+				console.log('followres: ', response.data)
+				setUsersIDFollowing(response.data)
 			})
 			.catch((error) => {
 				console.log(error)

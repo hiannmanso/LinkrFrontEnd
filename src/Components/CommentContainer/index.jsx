@@ -5,8 +5,13 @@ import axios from 'axios'
 import AuthContext from '../../contexts/AuthContext.jsx'
 
 export default function CommentContainer({ userID, postID }) {
-	const { infoUser, commentDisplay, checknewpost, setChecknewpost } =
-		useContext(AuthContext)
+	const {
+		infoUser,
+		commentDisplay,
+		checknewpost,
+		setChecknewpost,
+		usersIDFollowing,
+	} = useContext(AuthContext)
 	const [commentInput, setCommentInput] = useState()
 	const [comments, setComments] = useState()
 	const [bolleanComment, setBolleanComment] = useState(false)
@@ -16,7 +21,7 @@ export default function CommentContainer({ userID, postID }) {
 			url: `http://localhost:5000/comments/${postID}`,
 		})
 			.then((response) => {
-				console.log(response.data)
+				console.log('comments', response.data)
 				setComments(response.data)
 			})
 			.catch((error) => {
@@ -25,7 +30,6 @@ export default function CommentContainer({ userID, postID }) {
 	}, [bolleanComment])
 
 	function showComments() {
-		console.log('info:', infoUser)
 		axios({
 			method: 'get',
 			url: `http://localhost:5000/comments/${postID}`,
@@ -41,7 +45,6 @@ export default function CommentContainer({ userID, postID }) {
 
 	function newComment() {
 		if (commentInput) {
-			console.log(userID, postID)
 			axios({
 				method: 'post',
 				url: 'http://localhost:5000/comments',
@@ -73,7 +76,7 @@ export default function CommentContainer({ userID, postID }) {
 						return (
 							<div key={index} className='comment'>
 								<img src={item.picture} alt='' />
-								{console.log('item: ', item)}
+
 								{item.userID === userID ? (
 									<div className='commentInfos'>
 										<h1>
@@ -84,8 +87,33 @@ export default function CommentContainer({ userID, postID }) {
 									</div>
 								) : (
 									<div className='commentInfos'>
-										<h1>{item.name}</h1>
-										<h2>{item.text}</h2>
+										{usersIDFollowing.map(
+											(followers, index) => {
+												if (
+													followers.followed ===
+													item.userID
+												) {
+													return (
+														<>
+															<h1>
+																{item.name}
+																<span>
+																	• following
+																</span>
+															</h1>
+															<h2>{item.text}</h2>
+														</>
+													)
+												} else {
+													return (
+														<>
+															<h1>{item.name}</h1>
+															<h2>{item.text}</h2>
+														</>
+													)
+												}
+											}
+										)}
 									</div>
 								)}
 							</div>

@@ -13,6 +13,9 @@ import trasher from './../../assets/trasher.svg'
 import ModalDelete from '../ModalDelete/index.jsx'
 import PostHome from '../PostsHome/index.jsx'
 import RepostComponent from '../RePostComponent/index.jsx'
+import Loader from '../Loader/index.jsx'
+import { IoReloadOutline } from 'react-icons/io5'
+import useInterval from 'use-interval'
 
 export default function TimelineComponent() {
 	const {
@@ -40,8 +43,30 @@ export default function TimelineComponent() {
 	const idLocal = localStorage.getItem('id')
 	const tokenLocal = localStorage.getItem('token')
 	const [liked, setLiked] = useState(false)
+	const [finishTL, setFinishTL] = useState(false)
+	const [countNewPosts, setCountNewPosts] = useState(0)
 	const [following, setFollowing] = useState([]);
 	const [str, setStr] = useState('');
+	let offset = 0
+	// const [newPosts, setNewPosts] = useState(0);
+	// const [hasNewPosts, setHasNewPosts] = useState(false);
+	const [loadMore, setLoadMore] = useState([]);
+
+
+	useInterval(async () => {
+		try {
+			const { data } = await api.getPosts(tokenLocal);
+			if (data.length > posts.length) {
+				// setHasNewPosts(true);
+				setCountNewPosts(data.length - posts.length);
+				setLoadMore(data);
+			} else {
+				setCountNewPosts(0);
+			}
+		} catch (err) {
+			console.log("Error in verify new posts", err);
+		}
+	}, 15000);
 
 
 	useEffect(async () => {
@@ -56,20 +81,24 @@ export default function TimelineComponent() {
 		}
 	}, []);
 
-	useEffect(() => {
+	function getPosts() {
 		axios({
 			method: 'get',
-			url: 'http://localhost:5000/posts',
+			url: `http://localhost:5000/posts?limit=10&offset=${offset}`,
 			headers: {
 				Authorization: `Bearer ${tokenLocal}`,
 			}
 		})
 			.then((response) => {
-				setPosts(response.data)
+				setPosts((posts) => [...posts, ...response.data])
 				if (response.data.length < 1) {
 					setStr("No posts found from your friends");
 				}
 				console.log(response.data)
+				if (response.data.length < 1) {
+					console.log('finished')
+					setFinishTL(true)
+				}
 			})
 			.catch((error) => {
 				alert(
@@ -77,6 +106,24 @@ export default function TimelineComponent() {
 				)
 				console.log(error)
 			})
+		offset += 10
+	}
+	function handleScroll(e) {
+		if (
+			window.innerHeight + e.target.documentElement.scrollTop + 1 >=
+			e.target.documentElement.scrollHeight
+		) {
+			getPosts()
+		}
+	}
+	useInterval(() => {
+		//
+		console.log('timer')
+	}, 15000)
+
+	useEffect(() => {
+		getPosts()
+		window.addEventListener('scroll', handleScroll)
 	}, [checknewpost])
 
 	useEffect(async () => {
@@ -179,12 +226,11 @@ export default function TimelineComponent() {
 	}
 	return following.length > 0 && posts.length > 0 ? (
 		<s.TimelineContainer>
-			<header>
-				<h1>timeline</h1>
-			</header>
-
 			<div className='timeline'>
 				<div className='left'>
+					<header>
+						<h1>timeline</h1>
+					</header>
 					<section>
 						<div className='postContainer'>
 							{infoUser ? (
@@ -243,6 +289,22 @@ export default function TimelineComponent() {
 						</div>
 					</section>
 					<main>
+						<>
+							{countNewPosts > 0 ?
+								<s.NewPostBox onClick={() => {
+									setPosts(loadMore)
+									setCountNewPosts(0);
+									navigate(0)
+								}}>
+
+									<h1>{countNewPosts} new posts, load more!</h1>
+									<IoReloadOutline />
+								</s.NewPostBox>
+								:
+								<>
+								</>
+							}
+						</>
 						<s.Timeline>
 							<div className='postWComments'>
 								{posts ? (
@@ -340,6 +402,11 @@ export default function TimelineComponent() {
 							</div>
 						</s.Timeline>
 					</main>
+					{finishTL ? (
+						<h1 className='finish'>No more posts to see.</h1>
+					) : (
+						<Loader />
+					)}
 				</div>
 				<TrendingComponent />
 			</div>

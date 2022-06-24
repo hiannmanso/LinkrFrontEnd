@@ -88,6 +88,15 @@ async function getFollowing(token) {
 	return await axios.get(`${URL}follow`, config)
 }
 
+async function getPosts(token) {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	return await axios.get(`${URL}posts`, config);
+}
+
 const api = {
 	postLogin,
 	postSignUp,
@@ -100,6 +109,7 @@ const api = {
 	getUsersLikedOnPost,
 	setFollowing,
 	getFollowing,
+	getPosts
 }
 
 export default api
