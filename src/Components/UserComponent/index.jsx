@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from 'react'
 import AuthContext from '../../contexts/AuthContext.jsx'
 import axios from 'axios'
 import ReactHashtag from 'react-hashtag'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import TrendingComponent from '../TrendingComponent/index.jsx'
 import api from '../../services/api'
 import Likes from '../Likes'
@@ -12,10 +12,14 @@ import Follow from '../Follow'
 export default function HashtagComponent() {
 	const { setInfoUser, infoUser, renderHash } = useContext(AuthContext)
 	const token = localStorage.getItem('token');
+	const idLocal = localStorage.getItem('id');
 	const [posts, setPosts] = useState('')
 	const { userID } = useParams()
+	const { state } = useLocation();
+	const { name } = state;
 	console.log(userID)
 	const [following, setFollowing] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	const [checknewpost, setChecknewpost] = useState(false)
 	const navigate = useNavigate()
@@ -27,6 +31,7 @@ export default function HashtagComponent() {
 		})
 			.then((response) => {
 				setPosts(response.data)
+				setLoading(false);
 				console.log(response.data)
 			})
 			.catch((error) => {
@@ -47,12 +52,11 @@ export default function HashtagComponent() {
 				<s.Timeline>
 					<div className="left">
 						<header>
-							<Follow userID={userID} />
-							{posts ? (
-								<h1>{`${posts[0].name}'s posts`}</h1>
-							) : (
-								<h1>loading</h1>
-							)}
+							{userID != idLocal ? <Follow userID={userID} /> : <></>}
+							{(
+								<h1>{`${name}'s posts`}</h1>
+							)
+							}
 						</header>
 						{posts ? (
 							posts.map((item, index) => {

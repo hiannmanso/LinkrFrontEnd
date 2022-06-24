@@ -50,7 +50,7 @@ export default function TimelineComponent() {
 	let offset = 0
 	// const [newPosts, setNewPosts] = useState(0);
 	// const [hasNewPosts, setHasNewPosts] = useState(false);
-	const [loadMore, setLoadMore] = useState([]);
+	const [loadMore, setLoadMore] = useState('');
 
 
 	useInterval(async () => {
@@ -106,7 +106,7 @@ export default function TimelineComponent() {
 				)
 				console.log(error)
 			})
-		offset += 10
+		// offset += 10
 	}
 	function handleScroll(e) {
 		if (
@@ -116,10 +116,6 @@ export default function TimelineComponent() {
 			getPosts()
 		}
 	}
-	useInterval(() => {
-		//
-		console.log('timer')
-	}, 15000)
 
 	useEffect(() => {
 		getPosts()
