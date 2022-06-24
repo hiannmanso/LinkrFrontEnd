@@ -7,10 +7,11 @@ import axios from 'axios'
 import { DebounceInput } from 'react-debounce-input'
 import { Link, useNavigate } from 'react-router-dom'
 import Home from '../../pages/Home/index.jsx'
+import api from '../../services/api'
+import SearchInfo from '../SearchInfo'
 
 export default function HeaderTimeline() {
 	const {
-		token,
 		setInfoUser,
 		infoUser,
 		usersIDFollowing,
@@ -18,22 +19,26 @@ export default function HeaderTimeline() {
 	} = useContext(AuthContext)
 	const navigation = useNavigate()
 	const idLocal = localStorage.getItem('id')
+	const token = localStorage.getItem('token')
 	const [inputValue, setInputValue] = useState('')
 	const [infoSearch, setInfoSearch] = useState()
 	const [logout, setLogout] = useState(false)
+
+
 	function goOut() {
 		console.log('click')
 		localStorage.removeItem('token')
 		localStorage.removeItem('id')
 		navigation('/')
 	}
+
 	useEffect(() => {
 		axios({
 			method: 'get',
 			url: `http://localhost:5000/user/${idLocal}`,
 			headers: {
 				authorization: `Bearer ${token}`,
-			},
+			}
 		})
 			.then((response) => {
 				setInfoUser(response.data)
@@ -61,6 +66,9 @@ export default function HeaderTimeline() {
 		axios({
 			method: 'get',
 			url: `http://localhost:5000/users/${inputValue}`,
+			headers: {
+				authorization: `Bearer ${token}`,
+			}
 		})
 			.then((response) => {
 				console.log(response.data)
@@ -96,16 +104,7 @@ export default function HeaderTimeline() {
 					<div className='searchContainer'>
 						{infoSearch.map((item, index) => {
 							return (
-								<div
-									key={index}
-									className='infoSearch'
-									onClick={() => {
-										navigation(`/user/${item.id}`)
-									}}
-								>
-									<img src={item.picture} alt='profile' />
-									<p>{item.name}</p>
-								</div>
+								<SearchInfo index={index} name={item.name} picture={item.picture} userID={item.id} idLocal={idLocal} token={token} />
 							)
 						})}
 					</div>

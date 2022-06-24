@@ -327,7 +327,7 @@ export const editPost = styled.div`
 	top: 0;
 	right: 50px;
 `
-export const NewPostBox = styled.div`
+export const NewPostBox = styled.button`
 	width: 611px;
 	height: 61px;
 	left: 241px;
@@ -354,4 +354,22 @@ export const NewPostBox = styled.div`
 
 		color: #ffffff;
 	}
+`
+export const LoadMorePosts = styled.button`
+	width: 611px;
+	height: 61px;
+	border-radius: 16px;
+	background-color: #1877F2;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	p{
+		color: #FFFFFF;
+		font-family: 'Lato';
+		font-size: 16px;
+		font-weight: 400;
+	}
+
 `

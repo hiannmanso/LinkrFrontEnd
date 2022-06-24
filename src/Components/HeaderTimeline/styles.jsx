@@ -81,6 +81,13 @@ export const HeaderContainer = styled.div`
 
 				color: #515151;
 			}
+
+			span{
+				font-family: 'Lato';
+				color: #C5C5C5;
+				margin-left: 10px;
+			}
+
 			img {
 				padding: 0 12px 8px 0;
 				padding-right: 12px;
