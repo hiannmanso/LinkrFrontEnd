@@ -23,7 +23,7 @@ export default function App() {
 	const [displayRT, setDisplayRT] = useState('none')
 	const [repostID, setRepostID] = useState()
 	const [usersIDFollowing, setUsersIDFollowing] = useState()
-	const [URL, setURL] = useState('https://linker-g3.herokuapp.com')
+	const [URL, setURL] = useState('https://api-linkr-dney.onrender.com')
 	const [search, setSearch] = useState(false)
 	// const [URL, setURL] = useState('localhost:5000')
 

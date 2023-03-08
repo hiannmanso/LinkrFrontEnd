@@ -1,20 +1,22 @@
 import axios from 'axios'
 
 // const URL = 'localhost:5000/'
-const URL = 'https://linker-g3.herokuapp.com/'
+const URL ="https://api-linkr-dney.onrender.com/"
 
 async function postLogin(body) {
 	return await axios.post(`${URL}signin`, body)
 }
 
 async function postSignUp(objeto) {
+	console.log(objeto)
 	try {
 		const resposta = await axios.post(`${URL}signup`, objeto)
 		const { data } = resposta
 		console.log('registered!')
 		return data
 	} catch (err) {
-		console.log(err.resposta)
+
+		console.log(err)
 		return null
 	}
 }
@@ -89,7 +91,8 @@ async function getFollowing(token) {
 	return await axios.get(`${URL}follow`, config)
 }
 
-async function getPosts(token) {
+async function getPosts(token) { 
+	console.log(token)
 	const config = {
 		headers: {
 			Authorization: `Bearer ${token}`,
